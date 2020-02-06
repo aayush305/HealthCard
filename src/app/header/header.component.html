@@ -19,9 +19,8 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-
-                    <div class="collapse navbar-collapse main-menu-item justify-content-center"
-                        id="navbarSupportedContent">
+                <div class="collapse navbar-collapse main-menu-item justify-content-center"
+                       id="navbarSupportedContent">
                         <ul *ngIf="!isLogged"  class="navbar-nav align-items-center">
                             <!-- <li class="nav-item active">
                                 <a class="nav-link" href="index.html">Home</a>
@@ -75,9 +74,14 @@
                                 <a class="nav-link" href="contact.html">Contact</a>
                             </li> -->
                         </ul>
-                        <ul *ngIf="userType == 'doctor'">
+                        <ul *ngIf="userType == 'doctor'" class="navbar-nav align-items-center">
                             <li class="nav-item">
                                 <a class="nav-link" routerLink="/Prescription">Prescription</a>
+                            </li>
+                        </ul>
+                        <ul *ngIf="userType == 'lab'" class="navbar-nav align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/Prescription">Upload Report</a>
                             </li>
                         </ul>
                         <ul class="navbar-nav align-items-center">

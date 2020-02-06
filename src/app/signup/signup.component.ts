@@ -11,6 +11,8 @@ import { ToastrService } from "ngx-toastr";
 })
 export class SignupComponent implements OnInit {
   basicForm: JSON;
+
+  private id
   constructor(
     private Toastr: ToastrService,
     private router: Router,
@@ -38,19 +40,25 @@ export class SignupComponent implements OnInit {
       var dob = form.DOB.value;
       var contact = form.contact.value;
       var address = form.address.value;
-      // this.registerService.registerUser(
-      //   fname,
-      //   lname,
-      //   password,
-      //   address,
-      //   contact,
-      //   dob,
-      //   blood,
-      //   email,
-      //   user
-      // );
+      
+      this.registerService.getUserId(fname,lname,dob,user).subscribe(response=> {
+        this.id=response.userId
+        this.registerService.registerUser(
+          fname,
+          lname,
+          password,
+          address,
+          contact,
+          dob,
+          blood,
+          email,
+          user,
+          response.userId
+        ).subscribe(res=>{
+          console.log("resg status:",res)
+        })
+      })
 
-      this.registerService.getUserId(fname,lname,dob,user)
     } else {
       this.router.navigate(["/Signup2"], {
         state: {

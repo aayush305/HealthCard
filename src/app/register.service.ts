@@ -1,151 +1,221 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { BehaviorSubject, Subject  } from 'rxjs';
-import { LoginStat } from './Classes/Login/login-stat';
+import { BehaviorSubject, Subject, Observable } from "rxjs";
+import { LoginStat } from "./Classes/Login/login-stat";
 import { ToastrService } from "ngx-toastr";
-import {map} from 'rxjs/operators';
-import * as CryptoJs from 'crypto-js';
+import { map } from "rxjs/operators";
+import * as CryptoJs from "crypto-js";
 
 @Injectable({
   providedIn: "root"
 })
-
 export class RegisterService {
+  public isLogged = new BehaviorSubject<boolean>(false);
+  public isLoggedCast = this.isLogged.asObservable();
 
-  
-  public isLogged = new BehaviorSubject<boolean>(false)
-  public isLoggedCast = this.isLogged.asObservable()
+  public userT = new BehaviorSubject<any>(null)
+  public userTypeCast = this.userT.asObservable()
 
-  public userData = new BehaviorSubject<any>(null)
+  public userData = new BehaviorSubject<any>(null);
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private Toastr: ToastrService,
+    private Toastr: ToastrService
   ) {}
 
+  private listusers = new Subject<any>();
+  public alluser: any;
+  changeelectroProductt(search: any) {
+    //  console.log('auth changep')
+    this.listusers.next(search);
+  }
+  getelectroproductlistt() {
+    return this.alluser;
+  }
+  cast9Listener() {
+    return this.listusers.asObservable();
+  }
 
-  private listusers = new Subject<any>()
-      public alluser:any
-      changeelectroProductt(search:any)
-      {
-      //  console.log('auth changep')
-        this.listusers.next(search)
-      }
-      getelectroproductlistt(){
-        return this.alluser
-      }
-cast9Listener() {
-  return this.listusers.asObservable();
-}
-getuser(){
-  
-  this.http.get('http://localhost:8000/getusers/')
-    .subscribe((response:any)=>{
-      this.alluser = JSON.stringify(response.alluser)
-      this.listusers.next(this.alluser)
-      console.log("Users:",this.alluser)
-    })
-    
-}
-  register(password,fname,lname,email,blood,dob,contact,address,user,licence,labname,DOE,lab_address,selectedItems) {
-    //console.log("in registershop");
-    this.http.get('http://localhost:8000/getUserId/'+fname+'/'+lname+'/'+user+'/'+dob)
-    .subscribe((response:any)=>{
-      var userId = response.userId
-      this.http
-      .post("http://localhost:8000/registeruser", {
-        fname,
-        lname,
-        password,
-        address,
-        contact,
-        dob,
-        blood,
-        email,
-        user,
-        userId
-      })
+  getuser() {
+    this.http
+      .get("http://localhost:8000/getusers/")
       .subscribe((response: any) => {
-      if(user == "lab")
-      {
-      this.http
-        .post("http://localhost:8000/register", {
-          userId,password,fname,lname,email,blood,dob,contact,address,user,licence,labname,DOE,lab_address,selectedItems
-        })
-        .subscribe((response: any) => {
-          if (response.success) {
-            console.log("Inserted Successfully");
-            this.Toastr.success("Registration of  Lab successfull!!");
-          }
-        });
-    }
-  })
-  })
-};
-uploadreport(fd,selected)
-{
-  console.log("selected item",selected)
+        this.alluser = JSON.stringify(response.alluser);
+        this.listusers.next(this.alluser);
+        console.log("Users:", this.alluser);
+      });
+  }
 
-  this.http
-  .post("http://localhost:8000/upload/"+selected.name,{fd})
-  .subscribe((response: any) => {
-    if (response.success) {
-      console.log("Inserted Successfully");
-      this.Toastr.success("Report Uploaded!!");
-    }
-  });
-}
-    registermedic(password,fname,lname,email,blood,dob,contact,address,user,licence,shopname,DOE,shop_address,)
-    {
-      this.http.get('http://localhost:8000/getUserId/'+fname+'/'+lname+'/'+user+'/'+dob)
-      .subscribe((response:any)=>{
-        var userId = response.userId
+  register(
+    password,
+    fname,
+    lname,
+    email,
+    blood,
+    dob,
+    contact,
+    address,
+    user,
+    licence,
+    labname,
+    DOE,
+    lab_address,
+    selectedItems
+  ) {
+    //console.log("in registershop");
+    this.http
+      .get(
+        "http://localhost:8000/getUserId/" +
+          fname +
+          "/" +
+          lname +
+          "/" +
+          user +
+          "/" +
+          dob
+      )
+      .subscribe((response: any) => {
+        var userId = response.userId;
         this.http
-        .post("http://localhost:8000/registeruser", {
-          fname,
-          lname,
-          password,
-          address,
-          contact,
-          dob,
-          blood,
-          email,
-          user,
-          userId
-        })
-        .subscribe((response: any) => {
-      this.http
-      .post("http://localhost:8000/registermedic", {
-        userId,password,fname,lname,email,blood,dob,contact,address,user,licence,shopname,DOE,shop_address
-      })
+          .post("http://localhost:8000/registeruser", {
+            fname,
+            lname,
+            password,
+            address,
+            contact,
+            dob,
+            blood,
+            email,
+            user,
+            userId
+          })
+          .subscribe((response: any) => {
+            if (user == "lab") {
+              this.http
+                .post("http://localhost:8000/register", {
+                  userId,
+                  password,
+                  fname,
+                  lname,
+                  email,
+                  blood,
+                  dob,
+                  contact,
+                  address,
+                  user,
+                  licence,
+                  labname,
+                  DOE,
+                  lab_address,
+                  selectedItems
+                })
+                .subscribe((response: any) => {
+                  if (response.success) {
+                    console.log("Inserted Successfully");
+                    this.Toastr.success("Registration of  Lab successfull!!");
+                  }
+                });
+            }
+          });
+      });
+  }
+  uploadreport(fd, selected) {
+    console.log("selected item", selected);
+
+    this.http
+      .post("http://localhost:8000/upload/" + selected.name, { fd })
       .subscribe((response: any) => {
         if (response.success) {
           console.log("Inserted Successfully");
-          this.Toastr.success("Registration of medical shop successfull!!");
+          this.Toastr.success("Report Uploaded!!");
         }
       });
-    })
-  })
-    }
+  }
+  registermedic(
+    password,
+    fname,
+    lname,
+    email,
+    blood,
+    dob,
+    contact,
+    address,
+    user,
+    licence,
+    shopname,
+    DOE,
+    shop_address
+  ) {
+    this.http
+      .get(
+        "http://localhost:8000/getUserId/" +
+          fname +
+          "/" +
+          lname +
+          "/" +
+          user +
+          "/" +
+          dob
+      )
+      .subscribe((response: any) => {
+        var userId = response.userId;
+        this.http
+          .post("http://localhost:8000/registeruser", {
+            fname,
+            lname,
+            password,
+            address,
+            contact,
+            dob,
+            blood,
+            email,
+            user,
+            userId
+          })
+          .subscribe((response: any) => {
+            this.http
+              .post("http://localhost:8000/registermedic", {
+                userId,
+                password,
+                fname,
+                lname,
+                email,
+                blood,
+                dob,
+                contact,
+                address,
+                user,
+                licence,
+                shopname,
+                DOE,
+                shop_address
+              })
+              .subscribe((response: any) => {
+                if (response.success) {
+                  console.log("Inserted Successfully");
+                  this.Toastr.success(
+                    "Registration of medical shop successfull!!"
+                  );
+                }
+              });
+          });
+      });
+  }
 
-
-  getUserId(fname,lname,dob,user)
-  {
-    console.log("userId")
-    this.http.get("http://localhost:8000/getUserId/" +
-    fname +
-    "/" +
-    lname +
-    "/" +
-    user +
-    "/" +
-    dob).pipe(
-      map(response=>{
-        console.log("response",response)
-      })
-    )
+  getUserId(fname, lname, dob, user): Observable<any> {
+    console.log("userId");
+    return this.http.get(
+      "http://localhost:8000/getUserId/" +
+        fname +
+        "/" +
+        lname +
+        "/" +
+        user +
+        "/" +
+        dob
+    );
   }
 
   private specList = new Subject();
@@ -236,54 +306,20 @@ uploadreport(fd,selected)
       });
   }
 
-  registerUser(
-    fname,
-    lname,
-    password,
-    address,
-    contact,
-    dob,
-    blood,
-    email,
-    user
-  ) {
-    this.http
-      .get(
-        "http://localhost:8000/getUserId/" +
-          fname +
-          "/" +
-          lname +
-          "/" +
-          user +
-          "/" +
-          dob
-      )
-      .subscribe((response: any) => {
-        var userId = response.userId;
-        this.http
-          .post("http://localhost:8000/registeruser", {
-            fname,
-            lname,
-            password,
-            address,
-            contact,
-            dob,
-            blood,
-            email,
-            user,
-            userId
-          })
-          .subscribe((response: any) => {
-            if (response.success) {
-              console.log("Inserted Successfully");
-              this.router.navigate(["/Login"])
-              this.Toastr.success("Registration of user successfull!!");
-            } else {
-              console.log("Registration Error");
-              this.Toastr.error("Registration Failed", "Failed");
-            }
-          });
-      });
+  registerUser(fname,lname,password, address,contact,dob,blood,email,user,userId):Observable<any>{
+    console.log("regiserUser")
+   return this.http .post("http://localhost:8000/registeruser", {
+        fname,
+        lname,
+        password,
+        address,
+        contact,
+        dob,
+        blood,
+        email,
+        user,
+        userId
+      })
   }
 
   login(uname, password) {
@@ -292,43 +328,48 @@ uploadreport(fd,selected)
       .subscribe((response: any) => {
         //console.log("login:", response);
         if (response.success) {
-          var s = new LoginStat()
-          s.isLogged = true
-          s.userType = response.userType
-          this.isLogged.next(true)
+          var s = new LoginStat();
+          s.isLogged = true;
+          s.userType = response.userType;
+          this.isLogged.next(true);
 
-          console.log(response)
-          this.userData.next(response.userData)
+          console.log(response);
+          this.userData.next(response.userData);
+          this.userT.next(response.userType)
 
-
-          var encuerType = CryptoJs.AES.encrypt(response.userType,"Hello!")
-          var bytes = CryptoJs.AES.decrypt(encuerType,"Hello!")
+          var encuerType = CryptoJs.AES.encrypt(response.userType, "Hello!");
+          var bytes = CryptoJs.AES.decrypt(encuerType, "Hello!");
           var pt = bytes.toString(CryptoJs.enc.Utf8);
-          console.log('Ct:',encuerType," pt:",pt)
-          sessionStorage.setItem("isLogged","true")
-          sessionStorage.setItem("type",encuerType)
-          this.Toastr.success("Login Successful")
-          this.router.navigate(["/Patient/Home"])
+          console.log("Ct:", encuerType, " pt:", pt);
+          sessionStorage.setItem("isLogged", "true");
+          sessionStorage.setItem("type", encuerType);
+          this.Toastr.success("Login Successful");
+
+          if (response.userType.toLowerCase() == "patient")
+            this.router.navigate(["/Patient/Home"]);
+          else if (response.userType.toLowerCase() == "doctor")
+            this.router.navigate(["/Prescription"]);
+          else if (response.userType.toLowerCase() == "lab")
+            this.router.navigate(["/upload"]);
+          else if (response.userType.toLowerCase() == "medical")
+            this.router.navigate(["/Patient/Home"]);
         } else {
-          this.Toastr.error("Login Failed")
+          this.Toastr.error("Login Failed");
         }
       });
   }
 
-  logout()
-  {
-    this.isLogged.next(false)
-    sessionStorage.removeItem("isLogged")
-    sessionStorage.removeItem("userId")
-    this.Toastr.success("Logged Out")
-    this.router.navigate(["/Login"])
+  logout() {
+    this.isLogged.next(false);
+    sessionStorage.removeItem("isLogged");
+    sessionStorage.removeItem("userId");
+    this.Toastr.success("Logged Out");
+    this.router.navigate(["/Login"]);
   }
 
-  updateLoginStat(userId)
-  {
-    this.http.post('/update/user',{userId})
-    .subscribe((respose:any)=>{
-      console.log("upade stat:",respose)
-    })
+  updateLoginStat(userId) {
+    this.http.post("/update/user", { userId }).subscribe((respose: any) => {
+      console.log("upade stat:", respose);
+    });
   }
 }

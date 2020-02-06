@@ -1,22 +1,20 @@
 const express = require("express");
 const bodyparser = require("body-parser");
 const app = express();
-const multer=require('multer')
-const cookieParser = require("cookie-parser");
+const multer = require("multer");
 const chemist = require("./schemas/chemist");
 const lab = require("./schemas/lab");
 const login = require("./schemas/login");
-const doctor = require("./schemas//doctor");
+const doctor = require("./schemas/doctor");
 const labtest = require("./schemas/labtest");
 const user = require("./schemas/user");
 
 // const nJwt = require("njwt");
 // const keys = require("./keyConfig");
-const doctor = require("./schemas/doctor");
 const specialities = require("./schemas/speciality");
 const dateFormater = require("date-format");
 
-const labreport = require("./schemas/labreport")
+const labreport = require("./schemas/labreport");
 //var nodemailer = require('nodemailer');
 //var rn = require('random-number');
 //app.use(cookieParser());
@@ -95,65 +93,32 @@ app.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
     });
 });
 
-
 app.post("/register", async (req, res) => {
   console.log("Inside post register app.js");
   var usertype = req.body.user;
- 
+
   if (usertype == "lab") {
-    console.log("inside lab")
-    var selecteditems=req.body.selectedItems
-  
-  selecteditems.forEach(x => {
-    //console.log(x.item_text)
-    //insert lab tests
-    new labtest({
-      userId:req.body.userid,
-      test:x.item_text
-    }).save(function(err,data){
-    if(err){
-      console.log(err)
-    }
-  });
-  })
-  new lab({
-    userId:req.body.userId,
-    licence: req.body.licence,
-    labname: req.body.labname,
-    DOE:req.body.DOE,
-    address:req.body.lab_address
-  }).save(function(err, data) {
-    if (err) {
-      console.log("oh no");
-      res.status(500).json({
-        isSucceed: false
+    console.log("inside lab");
+    var selecteditems = req.body.selectedItems;
+
+    selecteditems.forEach(x => {
+      //console.log(x.item_text)
+      //insert lab tests
+      new labtest({
+        userId: req.body.userid,
+        test: x.item_text
+      }).save(function(err, data) {
+        if (err) {
+          console.log(err);
+        }
       });
-    } else {
-      console.log(data);
-      console.log("love you baby");
-      res.status(200).json({
-        success: true
-      });
-    }
-  }); 
-}
-})
-
-app.post("/registermedic",(req,res) => {
-
-  var usertype = req.body.user;
- 
-  
-
-
-  //lab insertion
-
-   new chemist({
-      userId:req.body.userId,
+    });
+    new lab({
+      userId: req.body.userId,
       licence: req.body.licence,
-      shopname: req.body.labname,
-      DOE:req.body.DOE,
-      address:req.body.shop_address
+      labname: req.body.labname,
+      DOE: req.body.DOE,
+      address: req.body.lab_address
     }).save(function(err, data) {
       if (err) {
         console.log("oh no");
@@ -168,9 +133,35 @@ app.post("/registermedic",(req,res) => {
         });
       }
     });
-  })
-    
+  }
+});
 
+app.post("/registermedic", (req, res) => {
+  var usertype = req.body.user;
+
+  //lab insertion
+
+  new chemist({
+    userId: req.body.userId,
+    licence: req.body.licence,
+    shopname: req.body.labname,
+    DOE: req.body.DOE,
+    address: req.body.shop_address
+  }).save(function(err, data) {
+    if (err) {
+      console.log("oh no");
+      res.status(500).json({
+        isSucceed: false
+      });
+    } else {
+      console.log(data);
+      console.log("love you baby");
+      res.status(200).json({
+        success: true
+      });
+    }
+  });
+});
 
 app.post("/getSpecialities", (req, response) => {
   console.log("Inside getSpecialities");
@@ -208,7 +199,7 @@ app.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
     dob.substring(dob.length - 2, dob.length) +
     dob.substring(dob.length - 5, dob.length - 3);
 
-  console.log("dob", new Date(dob));
+  // console.log("dob", new Date(dob));
   user
     .findOne({
       userId: {
@@ -220,37 +211,39 @@ app.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
     })
     .sort({ _id: -1 })
     .then(r => {
-      console.log(r);
+      // console.log(r);
       var middelPart = "not defined";
-      console.log("check:", r);
+      // console.log("check:", r);
       if (r == null) {
-        console.log("mp set to default");
+        // console.log("mp set to default");
         middelPart = "0000";
-        console.log("mp:", middelPart);
+        // console.log("mp:", middelPart);
       } else {
-        console.log("mp other");
+        // console.log("mp other");
 
         //get starting of middel in HEX
         var m1 = r.userId.substring(4, 6);
         console.log("m1:", m1);
         var m2 = parseInt(r.userId.substring(6, 8)) + 1;
-        console.log("m2:", m2);
+        // console.log("m2:", m2);
         if (m2 >= 100) {
-          console.log("reset");
+          // console.log("reset");
           m2 = 0;
-          m1 = parseInt(m1, 16) + 1;
-          m1 = m1.toString(16);
+          var c2 = m1.charCodeAt(1);
+          var c1 = m2.charCodeAt(0);
+          console.log(fromCharCode(c1), fromCharCode(c2));
+          m1 = fromCharCode(c1).toString() + fromCharCode(c2);
         }
         if (m2 < 10) {
           m2 = "0" + m2;
         }
-        console.log("mp other");
+        // console.log("mp other");
         middelPart = m1 + m2;
-        console.log("mp other", middelPart);
+        // console.log("mp other", middelPart);
       }
       id = (startPart + middelPart + endPart).toUpperCase();
 
-      console.log("getId:", id);
+      // console.log("getId:", id);
       res.status(200).json({
         userId: id
       });
@@ -258,6 +251,7 @@ app.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
 });
 
 app.post("/registeruser", async (req, res) => {
+  console.log("in register user", req.body);
   var { fname, lname, dob } = req.body;
   var userType = req.body.user;
   console.log(fname, lname, userType, dob);
@@ -299,8 +293,8 @@ app.post("/registeruser", async (req, res) => {
   // });
 });
 
-  //lab insertion
- 
+//lab insertion
+
 app.post("/doctorExtraDetail", (req, res) => {
   console.log("Inside doctorExtraDetail");
   doctor
@@ -364,52 +358,48 @@ app.post("/login", (req, res) => {
 });
 //get users email
 app.get("/getusers", (req, res) => {
-  user.find({},function(err,users){
-    if(!err){
-      console.log("users",users)
+  user.find({}, function(err, users) {
+    if (!err) {
+      console.log("users", users);
       res.status(200).json({
         alluser: users
       });
     }
-  })
-})
+  });
+});
 //get email end
 //upload file
 const storage = multer.diskStorage({
   destination: (req, file, callBack) => {
-      callBack(null, 'upload')
+    callBack(null, "upload");
   },
   filename: (req, file, callBack) => {
-      callBack(null, `health_${file.originalname}`)
+    callBack(null, `health_${file.originalname}`);
   }
-})
+});
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage });
 
-app.post("/upload/:userid",upload.array('files'), (req,res) =>{
-  const files=req.files;
+app.post("/upload/:userid", upload.array("files"), (req, res) => {
+  const files = req.files;
   files.forEach(x => {
-    console.log(x.filename)
-    console.log("uSERID",req.params.userid)
-    labreport.create({
-      labid:"Not done yet",
-      userid: req.params.userid,
-      report: x.filename,
-    }).then(data=> {
-
-    })
+    console.log(x.filename);
+    console.log("uSERID", req.params.userid);
+    labreport
+      .create({
+        labid: "Not done yet",
+        userid: req.params.userid,
+        report: x.filename
+      })
+      .then(data => {});
   });
   //console.log(file.filename)
-  if(!files)
-  {
-    console.log("error")
+  if (!files) {
+    console.log("error");
+  } else {
+    console.log("Doneeee");
   }
-  else
-  {
-    console.log("Doneeee")
-  }
-  res.send(files)
-
-})
+  res.send(files);
+});
 //file upload ends
 app.listen(8000, () => console.log("server is listening at 8000"));

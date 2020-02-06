@@ -7,6 +7,8 @@ import { PatientHomeComponent } from "./Patient/patient-home/patient-home.compon
 import { PatientGuard } from "./Gaurds/patient.guard";
 import { AddPrescriptionComponent } from "./add-prescription/add-prescription.component";
 import {UploadreportComponent} from './uploadreport/uploadreport.component';
+import { DoctorGuard } from './Gaurds/Docter/doctor.guard';
+import { LabGuard } from './Gaurds/Lab/lab.guard';
 
 const routes: Routes = [
   { path: "Login", component: LoginComponent },
@@ -17,8 +19,8 @@ const routes: Routes = [
     component: PatientHomeComponent,
     canActivate: [PatientGuard]
   },
-  { path: "Prescription", component: AddPrescriptionComponent },
-  { path: "upload", component: UploadreportComponent },
+  { path: "Prescription", component: AddPrescriptionComponent ,canActivate:[DoctorGuard]},
+  { path: "upload", component: UploadreportComponent, canActivate:[LabGuard] },
 ];
 
 @NgModule({
