@@ -25,6 +25,7 @@ import { UpdateProfileDoctorComponent } from './Doctor/update-profile-doctor/upd
 import { ViewProfileDoctorComponent } from './Doctor/view-profile-doctor/view-profile-doctor.component';
 import { HomeComponent } from './home/home.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { HomeComponent } from './home/home.component';
     UpdateProfileDoctorComponent,
     ViewProfileDoctorComponent,
     HomeComponent,
+
   ],
   imports: [
     BrowserModule,
