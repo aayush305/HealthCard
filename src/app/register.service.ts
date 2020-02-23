@@ -9,6 +9,14 @@ import * as CryptoJs from "crypto-js";
   providedIn: "root"
 })
 export class RegisterService {
+
+  private UserUrl = "http://localhost:8000/api/user";
+  private doctocUrl = "http://localhost:8000/api/doctor";
+  private LoginUrl = "http://localhost:8000/api/login";  
+  private specialityUrl = "http://localhost:8000/api/speciality";
+  private registerUrl = "http://localhost:8000/api/register";
+  private labUrl = "http://localhost:8000/api/lab";
+  
   public isLogged = new BehaviorSubject<boolean>(false);
   public isLoggedCast = this.isLogged.asObservable();
 
@@ -39,7 +47,7 @@ export class RegisterService {
 
   getuser() {
     this.http
-      .get("http://localhost:8000/getusers/")
+      .get(this.UserUrl+"/getusers/")
       .subscribe((response: any) => {
         this.alluser = JSON.stringify(response.alluser);
         this.listusers.next(this.alluser);
@@ -66,7 +74,7 @@ export class RegisterService {
     //console.log("in registershop");
     this.http
       .get(
-        "http://localhost:8000/getUserId/" +
+        this.UserUrl+"/getUserId/" +
           fname +
           "/" +
           lname +
@@ -78,7 +86,7 @@ export class RegisterService {
       .subscribe((response: any) => {
         var userId = response.userId;
         this.http
-          .post("http://localhost:8000/registeruser", {
+          .post(this.registerUrl+"/registeruser", {
             fname,
             lname,
             password,
@@ -93,7 +101,7 @@ export class RegisterService {
           .subscribe((response: any) => {
             if (user == "lab") {
               this.http
-                .post("http://localhost:8000/register", {
+                .post(this.registerUrl+"/register", {
                   userId,
                   password,
                   fname,
@@ -124,7 +132,7 @@ export class RegisterService {
     console.log("selected item", selected);
 
     this.http
-      .post("http://localhost:8000/upload/" + selected.name, { fd })
+      .post(this.labUrl+"/upload/" + selected.name, { fd })
       .subscribe((response: any) => {
         if (response.success) {
           console.log("Inserted Successfully");
@@ -136,7 +144,7 @@ export class RegisterService {
   getUserId(fname, lname, dob, user): Observable<any> {
     console.log("userId");
     return this.http.get(
-      "http://localhost:8000/getUserId/" +
+      this.UserUrl+"/getUserId/" +
         fname +
         "/" +
         lname +
@@ -170,7 +178,7 @@ export class RegisterService {
   ) {
     this.http
       .get(
-        "http://localhost:8000/getUserId/" +
+        this.UserUrl+"/getUserId/" +
           fname +
           "/" +
           lname +
@@ -182,7 +190,7 @@ export class RegisterService {
       .subscribe((response: any) => {
         var userId = response.userId;
         this.http
-          .post("http://localhost:8000/registeruser", {
+          .post(this.registerUrl+"/registeruser", {
             fname,
             lname,
             password,
@@ -196,7 +204,7 @@ export class RegisterService {
           })
           .subscribe((response: any) => {
             this.http
-              .post("http://localhost:8000/registermedic", {
+              .post(this.registerUrl+"/registermedic", {
                 userId,
                 password,
                 fname,
@@ -245,7 +253,7 @@ export class RegisterService {
     console.log("Inside Doc registration");
     this.http
       .get(
-        "http://localhost:8000/getUserId/" +
+        this.UserUrl+"/getUserId/" +
           fname +
           "/" +
           lname +
@@ -257,7 +265,7 @@ export class RegisterService {
       .subscribe((response: any) => {
         var userId = response.userId;
         this.http
-          .post("http://localhost:8000/registeruser", {
+          .post(this.registerUrl+"/registeruser", {
             fname,
             lname,
             password,
@@ -273,7 +281,7 @@ export class RegisterService {
             if (response.success) {
               console.log("Inserted Successfully Doc as user");
               this.http
-                .post("http://localhost:8000/doctorExtraDetail", {
+                .post(this.doctocUrl+"/doctorExtraDetail", {
                   licence,
                   degree,
                   specialities,
@@ -298,7 +306,7 @@ export class RegisterService {
 
   registerUser(fname,lname,password, address,contact,dob,blood,email,user,userId):Observable<any>{
     console.log("regiserUser")
-   return this.http .post("http://localhost:8000/registeruser", {
+   return this.http .post(this.registerUrl+"/registeruser", {
         fname,
         lname,
         password,
@@ -314,7 +322,7 @@ export class RegisterService {
 
   login(uname, password) {
     this.http
-      .post("http://localhost:8000/login", { uname, password })
+      .post(this.LoginUrl+"/login", { uname, password })
       .subscribe((response: any) => {
         if (response.success) {
           this.isLogged.next(true);
@@ -351,7 +359,8 @@ export class RegisterService {
     this.isLogged.next(false);
     this.userT.next("");
     sessionStorage.removeItem("isLogged");
-    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("uid");
+    sessionStorage.removeItem("type")
     this.Toastr.success("Logged Out");
     this.router.navigate(["/Login"]);
   }

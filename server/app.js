@@ -19,8 +19,6 @@ const specialities = require("./schemas/speciality");
 const dateFormater = require("date-format");
 const labreport = require("./schemas/labreport");
 const Presc = require("./schemas/dummyPresc");
-
-const labreport = require("./schemas/labreport");
 //var nodemailer = require('nodemailer');
 //var rn = require('random-number');
 //app.use(cookieParser());
@@ -30,18 +28,20 @@ var options = {
   max: 9999,
   integer: true
 };
-app.use("/api/user", userRelatedRoutes);
-app.use("/api/doctor", doctorRoutes);
-app.use("/api/speciality", specialityRoutes);
-app.use("/api/register", registerRoutes);
-app.use("/api/login", loginRoutes);
-app.use("/api/lab", labroutes);
+
 app.use((req, res, next) => {
   res.append("Access-Control-Allow-Origin", ["*"]);
   res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   res.append("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
+
+app.use("/api/user", userRelatedRoutes);
+app.use("/api/doctor", doctorRoutes);
+app.use("/api/speciality", specialityRoutes);
+app.use("/api/register", registerRoutes);
+app.use("/api/login", loginRoutes);
+app.use("/api/lab", labroutes);
 var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
@@ -53,4 +53,5 @@ mongoose
   })
   .then(() => console.log("Mongo DB connected"))
   .catch(err => console.log("Mongo connection error ", err));
+
 app.listen(8000, () => console.log("server is listening at 8000"));

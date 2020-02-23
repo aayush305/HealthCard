@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const specialities = require("./schemas/speciality");
+const specialities = require("../schemas/speciality");
 
 router.post("/getSpecialities", (req, response) => {
   console.log("Inside getSpecialities");
