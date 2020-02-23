@@ -56,6 +56,10 @@ export class SignupComponent implements OnInit {
           response.userId
         ).subscribe(res=>{
           console.log("resg status:",res)
+          if(res.success)
+            this.router.navigate(["/Login"])
+          else
+            this.Toastr.error("Registration Failed")
         })
       })
 

@@ -8,16 +8,11 @@ const login = require("./schemas/login");
 const doctor = require("./schemas/doctor");
 const labtest = require("./schemas/labtest");
 const user = require("./schemas/user");
-
-// const nJwt = require("njwt");
-// const keys = require("./keyConfig");
 const specialities = require("./schemas/speciality");
 const dateFormater = require("date-format");
-
 const labreport = require("./schemas/labreport");
-//var nodemailer = require('nodemailer');
-//var rn = require('random-number');
-//app.use(cookieParser());
+const Presc = require("./schemas/dummyPresc");
+
 app.use(bodyparser.json());
 var options = {
   min: 1000,
@@ -41,6 +36,25 @@ mongoose
   })
   .then(() => console.log("Mongo DB connected"))
   .catch(err => console.log("Mongo connection error ", err));
+
+/*Start
+
+Request to get all prescriptions for a patient */
+
+app.get("/getPrescriptionList/:userId", (req, res) => {
+  var userId = req.params.userId;
+
+  console.log("presc uid:", userId);
+
+  Presc.find({ userId }).then(prescriptions => {
+    console.log("list:", prescriptions);
+  });
+});
+
+/*
+End
+
+Request to get all prescriptions for a patient */
 
 app.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
   console.log(req.params);

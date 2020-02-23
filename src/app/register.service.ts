@@ -326,11 +326,7 @@ export class RegisterService {
     this.http
       .post("http://localhost:8000/login", { uname, password })
       .subscribe((response: any) => {
-        //console.log("login:", response);
         if (response.success) {
-          var s = new LoginStat();
-          s.isLogged = true;
-          s.userType = response.userType;
           this.isLogged.next(true);
 
           console.log(response);
@@ -343,12 +339,14 @@ export class RegisterService {
           console.log("Ct:", encuerType, " pt:", pt);
           sessionStorage.setItem("isLogged", "true");
           sessionStorage.setItem("type", encuerType);
+          sessionStorage.setItem("uid",response.userId);
+          
           this.Toastr.success("Login Successful");
 
           if (response.userType.toLowerCase() == "patient")
             this.router.navigate(["/Patient/Home"]);
           else if (response.userType.toLowerCase() == "doctor")
-            this.router.navigate(["/Prescription"]);
+            this.router.navigate(["/Prescription/Add"]);
           else if (response.userType.toLowerCase() == "lab")
             this.router.navigate(["/upload"]);
           else if (response.userType.toLowerCase() == "medical")
@@ -361,15 +359,10 @@ export class RegisterService {
 
   logout() {
     this.isLogged.next(false);
+    this.userT.next("");
     sessionStorage.removeItem("isLogged");
     sessionStorage.removeItem("userId");
     this.Toastr.success("Logged Out");
     this.router.navigate(["/Login"]);
-  }
-
-  updateLoginStat(userId) {
-    this.http.post("/update/user", { userId }).subscribe((respose: any) => {
-      console.log("upade stat:", respose);
-    });
   }
 }
