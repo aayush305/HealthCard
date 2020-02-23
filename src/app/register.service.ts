@@ -2,9 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Subject, Observable } from "rxjs";
-import { LoginStat } from "./Classes/Login/login-stat";
 import { ToastrService } from "ngx-toastr";
-import { map } from "rxjs/operators";
 import * as CryptoJs from "crypto-js";
 
 @Injectable({
@@ -34,6 +32,7 @@ export class RegisterService {
   getelectroproductlistt() {
     return this.alluser;
   }
+  
   cast9Listener() {
     return this.listusers.asObservable();
   }
@@ -133,6 +132,27 @@ export class RegisterService {
         }
       });
   }
+  
+  getUserId(fname, lname, dob, user): Observable<any> {
+    console.log("userId");
+    return this.http.get(
+      "http://localhost:8000/getUserId/" +
+        fname +
+        "/" +
+        lname +
+        "/" +
+        user +
+        "/" +
+        dob
+    );
+  }
+
+  private specList = new Subject();
+
+  getSpecList() {
+    return this.specList.asObservable();
+  }
+
   registermedic(
     password,
     fname,
@@ -201,36 +221,6 @@ export class RegisterService {
                 }
               });
           });
-      });
-  }
-
-  getUserId(fname, lname, dob, user): Observable<any> {
-    console.log("userId");
-    return this.http.get(
-      "http://localhost:8000/getUserId/" +
-        fname +
-        "/" +
-        lname +
-        "/" +
-        user +
-        "/" +
-        dob
-    );
-  }
-
-  private specList = new Subject();
-
-  getSpecList() {
-    return this.specList.asObservable();
-  }
-
-  getSpecialityArray() {
-    console.log("inside getSpecialityArray");
-    this.http
-      .post("http://localhost:8000/getSpecialities", {})
-      .subscribe((response: any) => {
-        console.log(JSON.stringify(response));
-        this.specList.next(response.specialityArray);
       });
   }
 

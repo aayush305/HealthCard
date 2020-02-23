@@ -1,3 +1,4 @@
+import { LabService } from './lab.service';
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { RegisterService } from "../register.service";
@@ -36,7 +37,8 @@ export class Signup2Component implements OnInit {
     private _route: ActivatedRoute,
     private router: Router,
     private Toastr: ToastrService,
-    private register: RegisterService
+    private register: RegisterService,
+    private labService: LabService
   ) {}
   
   ngOnInit() {
@@ -86,8 +88,8 @@ export class Signup2Component implements OnInit {
       allowSearchFilter: true
     };
     this.userId = this.fname + "_" + this.lname;
-    this.register.getSpecialityArray();
-    this.sub1 = this.register.getSpecList().subscribe((list: []) => {
+    this.labService.getSpecialityArray();
+    this.sub1 = this.labService.getSpecList().subscribe((list: []) => {
       this.dropdownList = list;
     });
 
@@ -113,7 +115,7 @@ export class Signup2Component implements OnInit {
 console.log("selected",this.selectedItems);
     //qvar contact = form.contact.value;
     //console.log(licence, shopname);
-    this.register.register(
+    this.labService.register(
       this.password,
       this.fname,
       this.lname,
