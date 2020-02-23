@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const labtest = require("./schemas/labtest");
-const lab = require("./schemas/lab");
-const chemist = require("./schemas/chemist");
-const login = require("./schemas/login");
-const user = require("./schemas/user");
+const labtest = require("../schemas/labtest");
+const lab = require("../schemas/lab");
+const chemist = require("../schemas/chemist");
+const login = require("../schemas/login");
+const user = require("../schemas/user");
 
 router.post("/register", async (req, res) => {
   console.log("Inside post register app.js");

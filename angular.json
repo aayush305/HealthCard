@@ -21,13 +21,11 @@
             "aot": false,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "src/assets/css/material-design-iconic-font.min.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/style.css"
             ],
             "scripts": [
-                
-               
-
 ]
           },
           "configurations": {

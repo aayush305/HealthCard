@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const labreport = require("./schemas/labreport");
+const labreport = require("../schemas/labreport");
 
 const storage = multer.diskStorage({
   destination: (req, file, callBack) => {
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/upload/:userid", upload.array("files"), (req, res) => {
+router.post("/upload/:userid", upload.array("files"), (req, res) => {
   const files = req.files;
   files.forEach(x => {
     console.log(x.filename);
