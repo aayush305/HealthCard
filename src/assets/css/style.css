@@ -1,6 +1,4 @@
-
 @import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Roboto:300,400,500,700&display=swap");
-@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 /* line 1, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_extends.scss */
 .btn_1, .btn_2, .regervation_part .btn_2:hover {
   background-image: -webkit-linear-gradient(to right, #649bff, #0070fa, #649bff);
@@ -18,7 +16,7 @@
 /**************** common css start ****************/
 /* line 3, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_common.scss */
 body {
-  /* font-family: "Roboto", sans-serif; */
+  font-family: "Roboto", sans-serif;
   padding: 0;
   margin: 0;
   font-size: 14px;
@@ -41,7 +39,7 @@ input:hover, input:focus {
 
 /* line 18, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_common.scss */
 .section_padding {
-  padding: 100px 0px;
+  padding: 140px 0px;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -187,13 +185,13 @@ a:hover {
 /* line 87, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_common.scss */
 h1, h2, h3, h4, h5, h6 {
   color: #242429;
-  /* font-family: "Playfair Display", serif; */
+  font-family: "Playfair Display", serif;
 }
 
 /* line 91, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_common.scss */
 p {
   color: #666666;
-  /* font-family: "Roboto", sans-serif; */
+  font-family: "Roboto", sans-serif;
   line-height: 1.929;
   font-size: 16px;
   margin-bottom: 0px;
@@ -505,14 +503,14 @@ ul {
   display: inline-block;
   padding: 10.5px 36px;
   font-size: 14px;
-  color: #999;
+  color: #000;
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;
   text-transform: capitalize;
   border: 1px solid #e4e6ea;
   border-radius: 2px;
-  /* font-family: "Playfair Display", serif; */
+  font-family: "Playfair Display", serif;
   background-size: 200% auto;
 }
 
@@ -559,7 +557,7 @@ ul {
   transition: all .4s ease-in-out;
   text-transform: uppercase;
   border-radius: 2px;
-  /* font-family: "Roboto", sans-serif; */
+  font-family: "Roboto", sans-serif;
   background-size: 200% auto;
   border-radius: 5px;
   display: inline-block;
@@ -682,7 +680,7 @@ ul {
   top: 0;
   width: 100%;
   height: 100%;
-  background: #999;
+  background: #000;
   opacity: 0;
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -1318,7 +1316,7 @@ ul {
 
 /* line 687, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_blog.scss */
 .blog_right_sidebar .search_widget .input-group button {
-  background: #999;
+  background: #fff;
   border-left: 0;
   border: 1px solid #f0e9ff;
   padding: 4px 15px;
@@ -1358,7 +1356,7 @@ ul {
 .blog_right_sidebar .newsletter_widget .input-group button {
   background: #fff;
   border-left: 0;
-  border: 1px solid #00;
+  border: 1px solid #f0e9ff;
   padding: 4px 15px;
   border-left: 0;
 }
@@ -1739,7 +1737,7 @@ ul {
 /* line 1236, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_blog.scss */
 .single-post-area .navigation-area .nav-left .thumb {
   margin-right: 20px;
-  background: #999;
+  background: #000;
 }
 
 /* line 1240, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_blog.scss */
@@ -1781,7 +1779,7 @@ ul {
 /* line 1271, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_blog.scss */
 .single-post-area .navigation-area .nav-right .thumb {
   margin-left: 20px;
-  background: #999;
+  background: #000;
 }
 
 /* line 1275, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_blog.scss */
@@ -2328,7 +2326,7 @@ ul {
   color: #242429;
   font-size: 14px;
   padding: 38px 23px;
-  /* font-family: "Playfair Display", serif; */
+  font-family: "Playfair Display", serif;
   line-height: 13px;
   text-transform: capitalize;
 }
@@ -2371,7 +2369,7 @@ ul {
 .dropdown .dropdown-menu .dropdown-item {
   font-size: 14px;
   padding: 9px 18px !important;
-  color: #999 !important;
+  color: #000 !important;
   text-transform: capitalize;
 }
 
@@ -2388,7 +2386,7 @@ ul {
 @media (max-width: 991px) {
   /* line 123, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_menu.scss */
   .single_page_menu .navbar-collapse ul li .nav-link {
-    color: #999 !important;
+    color: #000 !important;
   }
   /* line 131, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_menu.scss */
   .main_menu .navbar {
@@ -2459,7 +2457,7 @@ ul {
   color: #fff;
   font-size: 15px;
   padding: 0px 24px;
-  /* font-family: "Roboto", sans-serif; */
+  font-family: "Roboto", sans-serif;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -2491,7 +2489,7 @@ ul {
 
 /* line 342, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_menu.scss */
 .menu_fixed .main-menu-item ul li .nav-link {
-  color: #999;
+  color: #000;
 }
 
 /**************** banner part css start ****************/
@@ -2593,7 +2591,7 @@ ul {
   font-weight: 500;
   color: #242429;
   margin-bottom: 0;
-  /* font-family: "Roboto", sans-serif; */
+  font-family: "Roboto", sans-serif;
 }
 
 /* line 72, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_banner.scss */
@@ -2650,7 +2648,7 @@ ul {
 .banner_part .banner_text p {
   font-size: 15px;
   line-height: 30px;
-  /* font-family: "Roboto", sans-serif; */
+  font-family: "Roboto", sans-serif;
   color: #242429;
   padding-right: 20px;
 }
@@ -2829,7 +2827,7 @@ ul {
   color: #242429;
   width: 50%;
   float: left;
-  /* font-family: "Playfair Display", serif; */
+  font-family: "Playfair Display", serif;
   position: relative;
   padding-left: 29px;
 }
@@ -3357,7 +3355,7 @@ ul {
 /* line 59, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_review.scss */
 .review_part .client_review_single .client_review_text p {
   font-size: 18px;
-  /* font-family: "Playfair Display", serif; */
+  font-family: "Playfair Display", serif;
   color: #fff;
   line-height: 1.9;
 }
@@ -3421,7 +3419,7 @@ ul {
 
 /* line 109, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_review.scss */
 .review_part h4 span {
-  /* font-family: "Playfair Display", serif; */
+  font-family: "Playfair Display", serif;
   font-size: 14px;
   color: #fff;
   font-weight: 400;
@@ -3483,12 +3481,12 @@ ul {
 /**************** regervation_part css start ****************/
 /* line 2, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part select > option{
-  color: #999;
+  color: #000000;
   border-radius: 10%;
 }
 
 .regervation_part {
-  /* background-image: url("../img/reservation_bg.png"); */
+  background-image: url("../img/reservation_bg.png");
   margin-top:5%;
   background-position: center;
   background-repeat: no-repeat;
@@ -3505,7 +3503,7 @@ ul {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #1c19ab;
   opacity: 0.8;
   z-index: -1;
 }
@@ -3535,7 +3533,7 @@ ul {
 .regervation_part .regervation_content h2 {
   font-size: 24px;
   margin-bottom: 60px;
-  color: #000;
+  color: #fff;
 }
 
 @media (max-width: 991px) {
@@ -3547,18 +3545,17 @@ ul {
 
 /* line 46, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part .regervation_part_iner input {
-  color: #999 !important;
+  color: #000000 !important;
 }
 
 /* line 50, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part .regervation_part_iner .form-control {
   background-color: transparent;
-  color: #999 !important;
-  border: none;
-  border-bottom: 1px solid #999;
+  color: #fff !important;
+  border: 1px solid #fff;
   border-radius: 0px;
   font-size: 14px;
-  /* font-family: "Roboto", sans-serif; */
+  font-family: "Roboto", sans-serif;
   margin-bottom: 4px;
   height: 50px;
   padding: 15px;
@@ -3567,16 +3564,16 @@ ul {
 /* line 62, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part .regervation_part_iner textarea.form-control {
   height: 150px !important;
-  border: 1px solid #999;
+  border: 1px solid #e4e6ea;
 }
 
 /* line 69, .
 ./../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part .regervation_part_iner .time_icon .nice-select:after {
-  border-bottom: 0px solid #999;
-  border-right: 0px solid #999;
+  border-bottom: 0px solid #fff;
+  border-right: 0px solid #fff;
   content: "\e72b";
-  /* font-family: 'themify'; */
+  font-family: 'themify';
   transform: rotate(0deg);
 }
 
@@ -3607,25 +3604,21 @@ ul {
 
 /* line 102, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part a:hover {
-  color: #000 !important;
-}
-
-.regervation_part a:active ::placeholder {
-  color: #000 !important;
+  color: #fff !important;
 }
 
 /* line 107, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part ::placeholder {
-  color: #999 !important;
+  color: #fff !important;
 }
 
 /* line 110, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part .btn_2 {
-  margin-top: 5%;
-  background-color: #999 !important;
-  /* font-family: "Playfair Display", serif; */
+  margin-top: 10px;
+  background-color: #fff !important;
+  font-family: "Playfair Display", serif;
   font-weight: 500;
-  color: #999;
+  color: #242429;
   font-size: 14px;
 }
 
@@ -3636,7 +3629,7 @@ ul {
 
 /* line 123, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_regervation_part.scss */
 .regervation_part .nice-select .option {
-  color: #999 !important;
+  color: #000 !important;
 }
 
 /**************** chefs_part css start ****************/
@@ -5766,7 +5759,7 @@ h1, h2, h3, h4, h5, h6 {
 .blog_part .blog_btn {
   font-size: 14px;
   text-transform: uppercase;
-  /* font-family: "Playfair Display", serif; */
+  font-family: "Playfair Display", serif;
   font-weight: 500;
   margin-top: 20px;
   display: inline-block;
@@ -6264,42 +6257,3 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*# sourceMappingURL=style.css.map */
-/*  for footer icon from themify-icon */
-@font-face {
-	/* font-family: 'themify'; */
-	src:url('../fonts/themify.eot?-fvbane');
-	src:url('../fonts/themify.eot?#iefix-fvbane') format('embedded-opentype'),
-		url('../fonts/themify.woff?-fvbane') format('woff'),
-		url('../fonts/themify.ttf?-fvbane') format('truetype'),
-		url('../fonts/themify.svg?-fvbane#themify') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-[class^="ti-"], [class*=" ti-"] {
-	/* font-family: 'themify'; */
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.ti-facebook:before {
-	content: "\e741";
-}
-
-.ti-twitter:before {
-	content: "\e72a";
-}
-.ti-instagram:before {
-	content: "\e73d";
-}
-.ti-skype:before {
-	content: "\e72d";
-}

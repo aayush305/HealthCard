@@ -23,8 +23,6 @@ import { ViewProfilePatientComponent } from './Patient/view-profile-patient/view
 import { UpdateProfilePatientComponent } from './Patient/update-profile-patient/update-profile-patient.component';
 import { UpdateProfileDoctorComponent } from './Doctor/update-profile-doctor/update-profile-doctor.component';
 import { ViewProfileDoctorComponent } from './Doctor/view-profile-doctor/view-profile-doctor.component';
-import { HomeComponent } from './home/home.component';
-
 
 @NgModule({
   declarations: [
@@ -43,8 +41,6 @@ import { HomeComponent } from './home/home.component';
     UpdateProfilePatientComponent,
     UpdateProfileDoctorComponent,
     ViewProfileDoctorComponent,
-    HomeComponent,
-
   ],
   imports: [
     BrowserModule,

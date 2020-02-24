@@ -15,14 +15,11 @@ import { ViewProfilePatientComponent } from "./Patient/view-profile-patient/view
 import { UpdateProfilePatientComponent } from "./Patient/update-profile-patient/update-profile-patient.component";
 import { ViewProfileDoctorComponent } from "./Doctor/view-profile-doctor/view-profile-doctor.component";
 import { UpdateProfileDoctorComponent } from "./Doctor/update-profile-doctor/update-profile-doctor.component";
-import {HomeComponent} from './home/home.component'
-
 
 const routes: Routes = [
   { path: "Login", component: LoginComponent },
   { path: "Signup", component: SignupComponent },
   { path: "Signup2", component: Signup2Component },
-  {path:'',component:HomeComponent},
   {
     path: "Patient/Home",
     component: PatientHomeComponent,
