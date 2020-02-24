@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { BehaviorSubject, Subject } from "rxjs";
-import { LoginStat } from "./Classes/Login/login-stat";
+import { BehaviorSubject, Subject, Observable } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 import * as CryptoJs from "crypto-js";
 
@@ -10,8 +9,18 @@ import * as CryptoJs from "crypto-js";
   providedIn: "root"
 })
 export class RegisterService {
-  public loginStat = new BehaviorSubject<LoginStat>(new LoginStat());
-  public loginStatCaster = this.loginStat.asObservable();
+  private UserUrl = "http://localhost:8000/api/user";
+  private doctocUrl = "http://localhost:8000/api/doctor";
+  private LoginUrl = "http://localhost:8000/api/login";
+  private specialityUrl = "http://localhost:8000/api/speciality";
+  private registerUrl = "http://localhost:8000/api/register";
+  private labUrl = "http://localhost:8000/api/lab";
+
+  public isLogged = new BehaviorSubject<boolean>(false);
+  public isLoggedCast = this.isLogged.asObservable();
+
+  public userT = new BehaviorSubject<any>(null);
+  public userTypeCast = this.userT.asObservable();
 
   public userData = new BehaviorSubject<any>(null);
 
@@ -30,18 +39,19 @@ export class RegisterService {
   getelectroproductlistt() {
     return this.alluser;
   }
+
   cast9Listener() {
     return this.listusers.asObservable();
   }
+
   getuser() {
-    this.http
-      .get("http://localhost:8000/getusers/")
-      .subscribe((response: any) => {
-        this.alluser = JSON.stringify(response.alluser);
-        this.listusers.next(this.alluser);
-        console.log("Users:", this.alluser);
-      });
+    this.http.get(this.UserUrl + "/getusers/").subscribe((response: any) => {
+      this.alluser = JSON.stringify(response.alluser);
+      this.listusers.next(this.alluser);
+      console.log("Users:", this.alluser);
+    });
   }
+
   register(
     password,
     fname,
@@ -61,7 +71,8 @@ export class RegisterService {
     //console.log("in registershop");
     this.http
       .get(
-        "http://localhost:8000/getUserId/" +
+        this.UserUrl +
+          "/getUserId/" +
           fname +
           "/" +
           lname +
@@ -73,7 +84,7 @@ export class RegisterService {
       .subscribe((response: any) => {
         var userId = response.userId;
         this.http
-          .post("http://localhost:8000/registeruser", {
+          .post(this.registerUrl + "/registeruser", {
             fname,
             lname,
             password,
@@ -88,7 +99,7 @@ export class RegisterService {
           .subscribe((response: any) => {
             if (user == "lab") {
               this.http
-                .post("http://localhost:8000/register", {
+                .post(this.registerUrl + "/register", {
                   userId,
                   password,
                   fname,
@@ -119,7 +130,7 @@ export class RegisterService {
     console.log("selected item", selected);
 
     this.http
-      .post("http://localhost:8000/upload/" + selected.name, { fd })
+      .post(this.labUrl + "/upload/" + selected.name, { fd })
       .subscribe((response: any) => {
         if (response.success) {
           console.log("Inserted Successfully");
@@ -127,6 +138,28 @@ export class RegisterService {
         }
       });
   }
+
+  getUserId(fname, lname, dob, user): Observable<any> {
+    console.log("userId");
+    return this.http.get(
+      this.UserUrl +
+        "/getUserId/" +
+        fname +
+        "/" +
+        lname +
+        "/" +
+        user +
+        "/" +
+        dob
+    );
+  }
+
+  private specList = new Subject();
+
+  getSpecList() {
+    return this.specList.asObservable();
+  }
+
   registermedic(
     password,
     fname,
@@ -144,7 +177,8 @@ export class RegisterService {
   ) {
     this.http
       .get(
-        "http://localhost:8000/getUserId/" +
+        this.UserUrl +
+          "/getUserId/" +
           fname +
           "/" +
           lname +
@@ -156,7 +190,7 @@ export class RegisterService {
       .subscribe((response: any) => {
         var userId = response.userId;
         this.http
-          .post("http://localhost:8000/registeruser", {
+          .post(this.registerUrl + "/registeruser", {
             fname,
             lname,
             password,
@@ -170,7 +204,7 @@ export class RegisterService {
           })
           .subscribe((response: any) => {
             this.http
-              .post("http://localhost:8000/registermedic", {
+              .post(this.registerUrl + "/registermedic", {
                 userId,
                 password,
                 fname,
@@ -198,22 +232,6 @@ export class RegisterService {
       });
   }
 
-  private specList = new Subject();
-
-  getSpecList() {
-    return this.specList.asObservable();
-  }
-
-  getSpecialityArray() {
-    console.log("inside getSpecialityArray");
-    this.http
-      .post("http://localhost:8000/getSpecialities", {})
-      .subscribe((response: any) => {
-        console.log(JSON.stringify(response));
-        this.specList.next(response.specialityArray);
-      });
-  }
-
   registeDoc(
     fname,
     lname,
@@ -235,7 +253,8 @@ export class RegisterService {
     console.log("Inside Doc registration");
     this.http
       .get(
-        "http://localhost:8000/getUserId/" +
+        this.UserUrl +
+          "/getUserId/" +
           fname +
           "/" +
           lname +
@@ -247,7 +266,7 @@ export class RegisterService {
       .subscribe((response: any) => {
         var userId = response.userId;
         this.http
-          .post("http://localhost:8000/registeruser", {
+          .post(this.registerUrl + "/registeruser", {
             fname,
             lname,
             password,
@@ -263,7 +282,7 @@ export class RegisterService {
             if (response.success) {
               console.log("Inserted Successfully Doc as user");
               this.http
-                .post("http://localhost:8000/doctorExtraDetail", {
+                .post(this.doctocUrl + "/doctorExtraDetail", {
                   licence,
                   degree,
                   specialities,
@@ -295,59 +314,34 @@ export class RegisterService {
     dob,
     blood,
     email,
-    user
-  ) {
-    this.http
-      .get(
-        "http://localhost:8000/getUserId/" +
-          fname +
-          "/" +
-          lname +
-          "/" +
-          user +
-          "/" +
-          dob
-      )
-      .subscribe((response: any) => {
-        var userId = response.userId;
-        this.http
-          .post("http://localhost:8000/registeruser", {
-            fname,
-            lname,
-            password,
-            address,
-            contact,
-            dob,
-            blood,
-            email,
-            user,
-            userId
-          })
-          .subscribe((response: any) => {
-            if (response.success) {
-              console.log("Inserted Successfully");
-              this.Toastr.success("Registration of user successfull!!");
-            } else {
-              console.log("Registration Error");
-              this.Toastr.error("Registration Failed", "Failed");
-            }
-          });
-      });
+    user,
+    userId
+  ): Observable<any> {
+    console.log("regiserUser");
+    return this.http.post(this.registerUrl + "/registeruser", {
+      fname,
+      lname,
+      password,
+      address,
+      contact,
+      dob,
+      blood,
+      email,
+      user,
+      userId
+    });
   }
 
   login(uname, password) {
     this.http
-      .post("http://localhost:8000/login", { uname, password })
+      .post(this.LoginUrl + "/login", { uname, password })
       .subscribe((response: any) => {
-        //console.log("login:", response);
         if (response.success) {
-          var s = new LoginStat();
-          s.isLogged = true;
-          s.userType = response.userType;
-          this.loginStat.next(s);
+          this.isLogged.next(true);
 
           console.log(response);
           this.userData.next(response.userData);
+          this.userT.next(response.userType);
 
           var encuerType = CryptoJs.AES.encrypt(response.userType, "Hello!");
           var bytes = CryptoJs.AES.decrypt(encuerType, "Hello!");
@@ -355,8 +349,18 @@ export class RegisterService {
           console.log("Ct:", encuerType, " pt:", pt);
           sessionStorage.setItem("isLogged", "true");
           sessionStorage.setItem("type", encuerType);
+          sessionStorage.setItem("uid", response.userId);
+
           this.Toastr.success("Login Successful");
-          this.router.navigate(["/Patient/Home"]);
+
+          if (response.userType.toLowerCase() == "patient")
+            this.router.navigate(["/Patient/Home"]);
+          else if (response.userType.toLowerCase() == "doctor")
+            this.router.navigate(["/Prescription/Add"]);
+          else if (response.userType.toLowerCase() == "lab")
+            this.router.navigate(["/upload"]);
+          else if (response.userType.toLowerCase() == "medical")
+            this.router.navigate(["/Patient/Home"]);
         } else {
           this.Toastr.error("Login Failed");
         }
@@ -364,19 +368,12 @@ export class RegisterService {
   }
 
   logout() {
-    var s = new LoginStat();
-    s.isLogged = false;
-    s.userType = null;
-    this.loginStat.next(s);
+    this.isLogged.next(false);
+    this.userT.next("");
     sessionStorage.removeItem("isLogged");
-    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("uid");
+    sessionStorage.removeItem("type");
     this.Toastr.success("Logged Out");
     this.router.navigate(["/Login"]);
-  }
-
-  updateLoginStat(userId) {
-    this.http.post("/update/user", { userId }).subscribe((respose: any) => {
-      console.log("upade stat:", respose);
-    });
   }
 }

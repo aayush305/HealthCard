@@ -1,3 +1,4 @@
+import { UploadreportService } from './uploadreport.service';
 import { Component, OnInit } from '@angular/core';
 import {ElementRef} from '@angular/core';
 import {ViewChild} from '@angular/core';
@@ -27,7 +28,7 @@ export class UploadreportComponent implements OnInit {
   dropdownSettings = {};
   temp =[] 
   selected:any;
-  constructor(private http:HttpClient,private register: RegisterService) { }
+  constructor(private http:HttpClient,private _uploadReportService: UploadreportService) { }
   keyword = 'name';
   data = [
      {
@@ -64,8 +65,8 @@ export class UploadreportComponent implements OnInit {
    
 
   //  var temp =[];
-    this.register.getuser();
-    this.alluser = this.register.cast9Listener()
+    this._uploadReportService.getuser();
+    this.alluser = this._uploadReportService.cast9Listener()
     .subscribe(data => {
       
       this.obj = data
@@ -97,7 +98,7 @@ export class UploadreportComponent implements OnInit {
     for(let img of this.images){
       fd.append('files', img);
     }
-   // this.register.uploadreport(fd,this.selected);
+   // this._uploadReportService.uploadreport(fd,this.selected);
     this.http
     .post("http://localhost:8000/upload/"+this.selected.name, fd)
     .subscribe(
