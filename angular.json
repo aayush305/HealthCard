@@ -21,7 +21,6 @@
             "aot": false,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.css",
               "src/assets/css/bootstrap.min.css",
               "src/assets/css/animate.css",
               "src/assets/css/themify-icons.css",
@@ -32,7 +31,7 @@
             ],
             "scripts": [
 
-                "../HealthCard/src/assets/js/bootstrap.min.js"
+               
 
 ]
           },
