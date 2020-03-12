@@ -1,14 +1,14 @@
 const express = require("express");
 const bodyparser = require("body-parser");
 const app = express();
-const multer = require("multer");
-const cookieParser = require("cookie-parser");
-const chemist = require("./schemas/chemist");
-const lab = require("./schemas/lab");
-const login = require("./schemas/login");
-const doctor = require("./schemas/doctor");
-const labtest = require("./schemas/labtest");
-const user = require("./schemas/user");
+// const multer = require("multer");
+// const cookieParser = require("cookie-parser");
+// const chemist = require("./schemas/chemist");
+// const lab = require("./schemas/lab");
+// const login = require("./schemas/login");
+// const doctor = require("./schemas/doctor");
+// const labtest = require("./schemas/labtest");
+// const user = require("./schemas/user");
 
 // const nJwt = require("njwt");
 // const keys = require("./keyConfig");

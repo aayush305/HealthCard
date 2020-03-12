@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const user = require("../schemas/user");
+const Prescription = require("../schemas/prescription");
+const diagnose = require("../schemas/diagnose");
+const reports = require("../schemas/labreport");
 
 router.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
   // console.log(req.params);
@@ -60,7 +63,7 @@ router.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
 });
 
 router.get("/getusers", (req, res) => {
-  user.find({}, function(err, users) {
+  user.find({ userId: { $regex: "^P.*" } }, function(err, users) {
     if (!err) {
       console.log("users", users);
       res.status(200).json({
@@ -69,5 +72,28 @@ router.get("/getusers", (req, res) => {
     }
   });
 });
+var arr = [];
+router.get("/getDiagnosisList/:userId", (req, res) => {
+  console.log("pres list uid:", req.params.userId);
+  diagnose.find({ userId: req.params.userId }).then(list => {
+    console.log("diagnosis:", list);
+    res.status(200).json({
+      dList: list
+    });
+  });
+});
 
+var myReports = [];
+router.get("/getDetails/:pId/:reportIds", (req, res) => {
+  console.log(req.params.pId);
+  Prescription.findOne({ _id: req.params.pId }).then(pres => {
+    // reports.find({ _id: { $in: req.params.reportIds } }).then(r => {
+    //   console.log(r);
+    // });
+    res.status(200).json({
+      presc: pres,
+      reports: "not available"
+    });
+  });
+});
 module.exports = router;

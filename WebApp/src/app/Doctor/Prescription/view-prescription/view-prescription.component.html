@@ -1,0 +1,106 @@
+<link
+  href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+  rel="stylesheet"
+  id="bootstrap-css"
+/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div id="invoice">
+  <div class="invoice overflow-auto">
+    <div style="min-width: 600px">
+      <div class="row contacts">
+        <div class="col invoice-to"> 
+          <div class="text-gray-light">Doctor:</div>
+          <h2 class="to">Aayush Dakwala</h2>
+          <div class="address">Hospital Name:</div>
+          <div class="email">Lotus</div>
+        </div>
+        <div class="col invoice-details">
+          <div class="text-gray-light">Patient:</div>
+          <h2 class="invoice-id">PatientID</h2>
+          <div class="date">Date : 01/10/2018</div><br><br> 
+          <form (submit)="onSubmit(postForm)" #postForm="ngForm" >
+            <div class="ng-autocomplete">
+              Search
+              <ng-autocomplete 
+                [data]="temp"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent($event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate"
+              >
+              </ng-autocomplete>
+          
+              <ng-template #itemTemplate let-item>
+                <a style="color: #000000;" [innerHTML]="item.name"></a>
+              </ng-template>
+          
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div><br>
+            <button type="submit" class="btn btn-primary" style="padding-right: 60px;" >Search</button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="_flag" >
+  <!-- {{ responsedData | json }} -->
+  <p-table
+  class="table"
+    #dt
+    [columns]="columnDefs"
+    [value]="rowData"
+    [paginator]="true"
+    [rows]="30"
+  >
+    <ng-template pTemplate="caption">
+      <div *ngIf="__flag" style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input
+          type="text"
+          pInputText
+          size="50"
+          placeholder="Global Filter"
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          style="width:auto"
+        />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th scope="col" *ngFor="let col of columnDefs" [pSortableColumn]="col.field">
+          {{ col.header }}
+          <p-sortIcon
+            [field]="col.field"
+            ariaLabel="Activate to sort"
+            ariaLabelDesc="Activate to sort in descending order"
+            ariaLabelAsc="Activate to sort in ascending order"
+          ></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columnDefs">
+      <tr scope="row">
+        <td
+          *ngFor="let col of columnDefs"
+          (click)="onClick(rowData[col.field])"
+        >
+          <span *ngIf="rowData[col.field] !== medicines" >{{ rowData[col.field] | json }}</span>
+          <!-- <span *ngIf="rowData[col.field] === medicines">{{ responsedData.medicines | json }}</span> -->
+          
+        </td>
+      </tr>
+    </ng-template>
+   
+  </p-table>
+</div>
+
