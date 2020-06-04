@@ -1,4 +1,4 @@
-import { LabService } from './lab.service';
+import { LabService } from "./lab.service";
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { RegisterService } from "../register.service";
@@ -9,7 +9,7 @@ import { Subscription } from "rxjs";
 @Component({
   selector: "app-signup2",
   templateUrl: "./signup2.component.html",
-  styleUrls: ["./signup2.component.css"]
+  styleUrls: ["./signup2.component.css"],
 })
 export class Signup2Component implements OnInit {
   public fname: string;
@@ -26,8 +26,8 @@ export class Signup2Component implements OnInit {
   public dropdownList = [];
   public specialities: any[] = [
     {
-      speciality: ""
-    }
+      speciality: "",
+    },
   ];
 
   private sub1: Subscription;
@@ -40,30 +40,29 @@ export class Signup2Component implements OnInit {
     private register: RegisterService,
     private labService: LabService
   ) {}
-  
+
   ngOnInit() {
     this.dropdownList = [
-      { item_id: 1, item_text: 'Full Blood Examination' },
-      { item_id: 2, item_text: 'Iron studies' },
-      { item_id: 3, item_text: 'TSH (Thyroid Stimulating Hormone) Quantification' },
-      { item_id: 4, item_text: 'Urinalysis' },
-      { item_id: 5, item_text: 'INR (International Normalized Ratio)' }
+      { item_id: 1, item_text: "Full Blood Examination" },
+      { item_id: 2, item_text: "Iron studies" },
+      {
+        item_id: 3,
+        item_text: "TSH (Thyroid Stimulating Hormone) Quantification",
+      },
+      { item_id: 4, item_text: "Urinalysis" },
+      { item_id: 5, item_text: "INR (International Normalized Ratio)" },
     ];
-    this.selectedItems = [
-      { item_id: 1, item_text: 'Full Blood Examination' },
-   ];
-    this.dropdownSettings= {
+    this.selectedItems = [{ item_id: 1, item_text: "Full Blood Examination" }];
+    this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      idField: "item_id",
+      textField: "item_text",
+      selectAllText: "Select All",
+      unSelectAllText: "UnSelect All",
       itemsShowLimit: 3,
-    //  allowSearchFilter: true
+      //  allowSearchFilter: true
     };
-   
 
-  
     var basicForm = history.state;
     console.log(JSON.stringify(basicForm));
     this.fname = basicForm.fname;
@@ -77,7 +76,7 @@ export class Signup2Component implements OnInit {
     this.dob = basicForm.dob;
     this.address = basicForm.address;
     this.email = basicForm.email;
-    this.contact=basicForm.contact;
+    this.contact = basicForm.contact;
     this.dropdownSettings = {
       singleSelection: false,
       idField: "item_id",
@@ -85,7 +84,7 @@ export class Signup2Component implements OnInit {
       selectAllText: "Select All",
       unSelectAllText: "UnSelect All",
       itemsShowLimit: 3,
-      allowSearchFilter: true
+      allowSearchFilter: true,
     };
     this.userId = this.fname + "_" + this.lname;
     this.labService.getSpecialityArray();
@@ -102,41 +101,42 @@ export class Signup2Component implements OnInit {
     //   this.dob
     // );
   }
- 
-  registerLab(form) {
-  
-    console.log("signup 2 dob"+this.dob);
-    var licence =form.licence.value;
-    var labname = form.lab_name.value;
-    var DOE=form.DOE.value;
-    var lab_address=form.address.value;
-  //  var l=form.l1.value;
-console.log("selected",this.selectedItems);
-    //qvar contact = form.contact.value;
-    //console.log(licence, shopname);
-    this.labService.register(
-      this.password,
-      this.fname,
-      this.lname,
-      this.email,
-      this.blood,
-      this.dob,
-      this.contact,
-      this.address,
-      this.user,
-      licence,
-      labname,
-      DOE,
-      lab_address,
-      this.selectedItems
 
-   );
-    
-   
+  registerLab(form) {
+    console.log("signup 2 dob" + this.dob);
+    var licence = form.licence.value;
+    var labname = form.lab_name.value;
+    var DOE = form.DOE.value;
+    var lab_address = form.address.value;
+    if (licence && labname && DOE && lab_address) {
+      //  var l=form.l1.value;
+      console.log("selected", this.selectedItems);
+      //qvar contact = form.contact.value;
+      //console.log(licence, shopname);
+      this.labService.register(
+        this.password,
+        this.fname,
+        this.lname,
+        this.email,
+        this.blood,
+        this.dob,
+        this.contact,
+        this.address,
+        this.user,
+        licence,
+        labname,
+        DOE,
+        lab_address,
+        this.selectedItems
+      );
+      this.router.navigate(["/Login"]);
+    } else {
+      this.Toastr.error("All fields are mendetory!!");
+    }
   }
   addSpeciality() {
     this.specialities.push({
-      speciality: ""
+      speciality: "",
     });
   }
 
@@ -144,70 +144,41 @@ console.log("selected",this.selectedItems);
     this.specialities.splice(i, 1);
   }
 
-  // registerMedic(form) {
-  //   var licence = form.licence.value;
-  //   var shopname = form.shop_name.value;
-  //   var contact = form.contact.value;
-  //   console.log(licence, shopname);
-  //   this.register.register(
-  //     licence,
-  //     this.fname,
-  //     shopname,
-  //     contact,
-  //     this.password,
-  //     this.address,
-  //     this.user
-  //   );
-  // }
-  // registerLab(form) {
-  //   var licence = form.licence.value;
-  //   var shopname = form.lab_name.value;
-  //   var contact = form.contact.value;
-  //   //  console.log(licence , shopname)
-     
-   
-
   registerDoc(form) {
-    this.specialities.forEach(spec => {
+    this.specialities.forEach((spec) => {
       this.selectedItems.push(spec.speciality);
     });
-    this.register.registeDoc(
-      this.fname,
-      this.lname,
-      this.password,
-      this.address,
-      this.contact,
-      this.dob,
-      this.blood,
-      this.email,
-      this.user,
-      form.licence.value,
-      form.degree.value,
-      this.selectedItems,
-      this.specialities,
-      form.work_name.value,
-      form.work_contact.value,
-      form.work_address.value
-    );
+
+    if (
+      form.licence.value &&
+      form.degree.value &&
+      form.work_name.value &&
+      form.work_contact.value &&
+      form.work_address.value &&
+      this.selectedItems &&
+      this.specialities
+    ) {
+      this.register.registeDoc(
+        this.fname,
+        this.lname,
+        this.password,
+        this.address,
+        this.contact,
+        this.dob,
+        this.blood,
+        this.email,
+        this.user,
+        form.licence.value,
+        form.degree.value,
+        this.selectedItems,
+        this.specialities,
+        form.work_name.value,
+        form.work_contact.value,
+        form.work_address.value
+      );
+      this.router.navigate(["/Login"]);
+    } else {
+      this.Toastr.error("All fields are mendetory!!");
+    }
   }
 }
-  // registerPatient(form) {
-  //   //console.log("In com");
-  //   var contact = form.contact.value;
-  //   var dob = form.DOB.value;
-  //   var blood = form.bloodType.value;
-  //   var email = form.email.value;
-  //   this.register.registeruser(
-  //     this.fname,
-  //     this.lname,
-  //     this.userId,
-  //     this.password,
-  //     this.address,
-  //     contact,
-  //     dob,
-  //     blood,
-  //     email,
-  //     this.user
-  //   );
-  // }
-
