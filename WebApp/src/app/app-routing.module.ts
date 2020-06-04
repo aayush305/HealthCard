@@ -1,5 +1,5 @@
-import { DetailedPrescriptionComponent } from './Doctor/Prescription/detailed-prescription/detailed-prescription.component';
-import { LabHomeComponent } from './Lab/lab-home/lab-home.component';
+import { DetailedPrescriptionComponent } from "./Doctor/Prescription/detailed-prescription/detailed-prescription.component";
+import { LabHomeComponent } from "./Lab/lab-home/lab-home.component";
 
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
@@ -18,8 +18,9 @@ import { ViewProfilePatientComponent } from "./Patient/view-profile-patient/view
 import { UpdateProfilePatientComponent } from "./Patient/update-profile-patient/update-profile-patient.component";
 import { ViewProfileDoctorComponent } from "./Doctor/view-profile-doctor/view-profile-doctor.component";
 import { UpdateProfileDoctorComponent } from "./Doctor/update-profile-doctor/update-profile-doctor.component";
-import { DiagnoseComponent } from './Doctor/diagnose/diagnose.component';
-import {HomeComponent} from './home/home.component';
+import { DiagnoseComponent } from "./Doctor/diagnose/diagnose.component";
+import { HomeComponent } from "./home/home.component";
+import { from } from "rxjs";
 
 const routes: Routes = [
   { path: "Login", component: LoginComponent },
@@ -30,68 +31,68 @@ const routes: Routes = [
   {
     path: "Patient/Home",
     component: PatientHomeComponent,
-    canActivate: [PatientGuard]
+    canActivate: [PatientGuard],
   },
   {
     path: "Prescription/Add",
     component: AddPrescriptionComponent,
-    canActivate: [DoctorGuard]
+    canActivate: [DoctorGuard],
   },
   {
     path: "Prescription/Doctor/View",
     component: ViewPrescriptionComponent,
-    canActivate: [DoctorGuard]
+    canActivate: [DoctorGuard],
   },
   { path: "upload", component: UploadreportComponent, canActivate: [LabGuard] },
   {
     path: "Prescription/Patient/View",
     component: ViewPrescriptionPatientComponent,
-    canActivate: [PatientGuard]
+    canActivate: [PatientGuard],
   },
   {
     path: "Patient/Profile/View",
     component: ViewProfilePatientComponent,
-    canActivate: [PatientGuard]
+    canActivate: [PatientGuard],
   },
   {
     path: "Patient/Profile/Update",
     component: UpdateProfilePatientComponent,
-    canActivate: [PatientGuard]
+    canActivate: [PatientGuard],
   },
   {
     path: "Doctor/Profile/View",
     component: ViewProfileDoctorComponent,
-    canActivate: [DoctorGuard]
+    canActivate: [DoctorGuard],
   },
   {
     path: "Doctor/Profile/Update",
     component: UpdateProfileDoctorComponent,
-    canActivate: [DoctorGuard]
+    canActivate: [DoctorGuard],
   },
   {
-    path:"Diagnose",
-    component:DiagnoseComponent,
-    canActivate:[DoctorGuard]
+    path: "Diagnose",
+    component: DiagnoseComponent,
+    canActivate: [DoctorGuard],
   },
   {
     path: "labhome",
     component: LabHomeComponent,
-    canActivate: [LabGuard]
+    canActivate: [LabGuard],
   },
   {
     path: "getPrescriptions",
     component: ViewPrescriptionComponent,
-    canActivate: [DoctorGuard]
+    canActivate: [DoctorGuard],
   },
   {
     path: "detailedPrescription",
     component: DetailedPrescriptionComponent,
-    canActivate: [DoctorGuard]
-  }
+    canActivate: [DoctorGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

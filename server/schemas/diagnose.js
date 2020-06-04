@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 var diagnose = new mongoose.Schema({
   userId: String,
+  userName: String,
   docId: String,
+  docName: String,
   Date: { type: Date, default: new Date().toLocaleDateString() },
   symptoms: [],
   conclusion: String,

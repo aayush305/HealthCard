@@ -5,7 +5,7 @@ import { Subscribable, Subscription } from "rxjs";
 @Component({
   selector: "app-add-prescription",
   templateUrl: "./add-prescription.component.html",
-  styleUrls: ["./add-prescription.component.css"]
+  styleUrls: ["./add-prescription.component.css"],
 })
 export class AddPrescriptionComponent implements OnInit {
   public hospital: String;
@@ -17,14 +17,14 @@ export class AddPrescriptionComponent implements OnInit {
   public medicines: any[] = [
     {
       name: "",
-      douses: {
+      doses: {
         morning: "",
         afternoon: "",
-        night: ""
+        night: "",
       },
       days: "",
-      description: ""
-    }
+      description: "",
+    },
   ];
 
   constructor(
@@ -45,13 +45,13 @@ export class AddPrescriptionComponent implements OnInit {
   addMedicine() {
     this.medicines.push({
       name: "",
-      douses: {
+      doses: {
         morning: "",
         afternoon: "",
-        night: ""
+        night: "",
       },
       days: "",
-      description: ""
+      description: "",
     });
   }
 
@@ -64,7 +64,7 @@ export class AddPrescriptionComponent implements OnInit {
     var form = {
       hospital: this.hospital,
       date: this.dateD,
-      time: this.time
+      time: this.time,
     };
     console.log("At component:" + JSON.stringify(form));
     console.log("-->" + form.hospital + "-->" + form.date);
@@ -102,26 +102,4 @@ export class AddPrescriptionComponent implements OnInit {
     console.log("---time-->" + strTime);
     return strTime;
   }
-
-  // mor(i: number) {
-  //   if (this.chMor[i]) {
-  //     this.medicines[i].douses.morning = 1;
-  //   } else {
-  //     this.medicines[i].douses.morning = 0;
-  //   }
-  // }
-  // aft(i: number) {
-  //   if (this.chAft[i]) {
-  //     this.medicines[i].douses.afternoon = 1;
-  //   } else {
-  //     this.medicines[i].douses.afternoon = 0;
-  //   }
-  // }
-  // nig(i: number) {
-  //   if (this.chNig[i]) {
-  //     this.medicines[i].douses.night = 1;
-  //   } else {
-  //     this.medicines[i].douses.night = 0;
-  //   }
-  // }
 }

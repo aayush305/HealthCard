@@ -3,19 +3,18 @@ var preschema = new mongoose.Schema({
   hospital: String,
   date: Date,
   time: String,
-  prescriptionId: String,
   medicines: [
     {
       name: String,
       doses: {
         morning: Number,
         afternoon: Number,
-        night: Number
+        night: Number,
       },
       days: Number,
-      description: String
-    }
-  ]
+      description: String,
+    },
+  ],
 });
 var prescription = mongoose.model("prescription", preschema);
 

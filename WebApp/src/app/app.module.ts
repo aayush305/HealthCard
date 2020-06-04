@@ -23,11 +23,12 @@ import { ViewProfilePatientComponent } from "./Patient/view-profile-patient/view
 import { UpdateProfilePatientComponent } from "./Patient/update-profile-patient/update-profile-patient.component";
 import { UpdateProfileDoctorComponent } from "./Doctor/update-profile-doctor/update-profile-doctor.component";
 import { ViewProfileDoctorComponent } from "./Doctor/view-profile-doctor/view-profile-doctor.component";
-import { DiagnoseComponent } from './Doctor/diagnose/diagnose.component';
-import { HomeComponent } from './home/home.component';
-import { LabHomeComponent } from './Lab/lab-home/lab-home.component';
-import {TableModule} from 'primeng/table';
-import { DetailedPrescriptionComponent } from './Doctor/Prescription/detailed-prescription/detailed-prescription.component'
+import { DiagnoseComponent } from "./Doctor/diagnose/diagnose.component";
+import { HomeComponent } from "./home/home.component";
+import { LabHomeComponent } from "./Lab/lab-home/lab-home.component";
+import { TableModule } from "primeng/table";
+import { DetailedPrescriptionComponent } from "./Doctor/Prescription/detailed-prescription/detailed-prescription.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,7 @@ import { DetailedPrescriptionComponent } from './Doctor/Prescription/detailed-pr
     DiagnoseComponent,
     HomeComponent,
     LabHomeComponent,
-    DetailedPrescriptionComponent
+    DetailedPrescriptionComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,12 +63,12 @@ import { DetailedPrescriptionComponent } from './Doctor/Prescription/detailed-pr
     TableModule,
     ToastrModule.forRoot({
       timeOut: 2000,
-      positionClass:'toast-top-right',
-      preventDuplicates:false
+      positionClass: "toast-top-right",
+      preventDuplicates: false,
     }),
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

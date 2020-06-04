@@ -102,7 +102,7 @@
                     Morning<input
                       type="checkbox"
                       name="douses_morning_{{ i }}"
-                      [(ngModel)]="med.douses.morning"
+                      [(ngModel)]="med.doses.morning"
                       ng-true-value="'1'"
                       ng-false-value="'0'"
                     />
@@ -113,7 +113,7 @@
                     Afternoon<input
                       type="checkbox"
                       name="douses_afternoon_{{ i }}"
-                      [(ngModel)]="med.douses.afternoon"
+                      [(ngModel)]="med.doses.afternoon"
                       ng-true-value="'1'"
                       ng-false-value="'0'"
                     />
@@ -124,7 +124,7 @@
                     Night<input
                       type="checkbox"
                       name="douses_night_{{ i }}"
-                      [(ngModel)]="med.douses.night"
+                      [(ngModel)]="med.doses.night"
                       ng-true-value="'1'"
                       ng-false-value="'0'"
                     />
@@ -140,15 +140,6 @@
                     placeholder="Days"
                   />
                 </div>
-                <!-- <input type="checkbox"
-       ng-model="string"
-       [name="string"]
-       [ng-true-value="expression"]
-       [ng-false-value="expression"]
-       [ng-change="string"]> -->
-                <!-- <div class="form-group col-md-2">
-                  <h3 class="form-control">X</h3>
-                </div> -->
                 <div class="form-group col-md-2">
                   <button
                     type="button"
