@@ -282,6 +282,7 @@ export class RegisterService {
               console.log("Inserted Successfully Doc as user");
               this.http
                 .post(this.doctocUrl + "/doctorExtraDetail", {
+                  userId,
                   licence,
                   degree,
                   specialities,
