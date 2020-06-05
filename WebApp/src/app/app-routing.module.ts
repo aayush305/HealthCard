@@ -1,4 +1,3 @@
-import { DetailedPrescriptionComponent } from "./Doctor/Prescription/detailed-prescription/detailed-prescription.component";
 import { LabHomeComponent } from "./Lab/lab-home/lab-home.component";
 
 import { NgModule } from "@angular/core";
@@ -21,6 +20,7 @@ import { UpdateProfileDoctorComponent } from "./Doctor/update-profile-doctor/upd
 import { DiagnoseComponent } from "./Doctor/diagnose/diagnose.component";
 import { HomeComponent } from "./home/home.component";
 import { from } from "rxjs";
+import { UplodedreportsComponent } from "./Lab/uplodedreports/uplodedreports.component";
 
 const routes: Routes = [
   { path: "Login", component: LoginComponent },
@@ -74,19 +74,19 @@ const routes: Routes = [
     component: DiagnoseComponent,
     canActivate: [DoctorGuard],
   },
+
   {
-    path: "labhome",
+    path: "lab/labhome",
     component: LabHomeComponent,
     canActivate: [LabGuard],
   },
   {
-    path: "getPrescriptions",
-    component: ViewPrescriptionComponent,
-    canActivate: [DoctorGuard],
+    path: "lab/uploadedreport",
+    component: UplodedreportsComponent,
   },
   {
-    path: "detailedPrescription",
-    component: DetailedPrescriptionComponent,
+    path: "getPrescriptions",
+    component: ViewPrescriptionComponent,
     canActivate: [DoctorGuard],
   },
 ];

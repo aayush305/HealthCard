@@ -45,23 +45,8 @@
       <td *ngFor="let col of columnDefs" (click)="onClick(rowData[col.field])">
         {{ rowData[col.field] }}
       </td>
-      <td>
-        <input
-          type="file"
-          class="form-control"
-          #fileInput
-          multiple
-          name="images"
-          (change)="onFileSelected($event)"
-        />
-
-
-      </td>
-      <td>
-        <button class="btn_2" type="submit" (click)="upload(rowData.userId,rowData._id)">
-          Upload 
-        </button>
-      </td>
+     
+     
     </tr>
   </ng-template>
 </p-table>
