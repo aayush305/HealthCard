@@ -17,14 +17,14 @@ router.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
   user
     .findOne({
       userId: {
-        $regex: new RegExp("^" + userType.charAt(0).toUpperCase() + ".")
+        $regex: new RegExp("^" + userType.charAt(0).toUpperCase() + "."),
       },
       firstname: { $regex: new RegExp("^" + fname + "$", "i") },
       lastname: { $regex: new RegExp("^" + lname + "$", "i") },
-      dob: new Date(dob)
+      dob: new Date(dob),
     })
     .sort({ _id: -1 })
-    .then(r => {
+    .then((r) => {
       console.log(r);
       var middelPart = "not defined";
       console.log("check:", r);
@@ -57,7 +57,7 @@ router.get("/getUserId/:fname/:lname/:userType/:dob", (req, res) => {
 
       console.log("getId:", id);
       res.status(200).json({
-        userId: id
+        userId: id,
       });
     });
 });
@@ -67,7 +67,7 @@ router.get("/getusers", (req, res) => {
     if (!err) {
       console.log("users", users);
       res.status(200).json({
-        alluser: users
+        alluser: users,
       });
     }
   });
@@ -75,10 +75,10 @@ router.get("/getusers", (req, res) => {
 var arr = [];
 router.get("/getDiagnosisList/:userId", (req, res) => {
   console.log("pres list uid:", req.params.userId);
-  diagnose.find({ userId: req.params.userId }).then(list => {
+  diagnose.find({ userId: req.params.userId }).then((list) => {
     console.log("diagnosis:", list);
     res.status(200).json({
-      dList: list
+      dList: list,
     });
   });
 });
@@ -86,13 +86,13 @@ router.get("/getDiagnosisList/:userId", (req, res) => {
 var myReports = [];
 router.get("/getDetails/:pId/:reportIds", (req, res) => {
   console.log(req.params.pId);
-  Prescription.findOne({ _id: req.params.pId }).then(pres => {
+  Prescription.findOne({ _id: req.params.pId }).then((pres) => {
     // reports.find({ _id: { $in: req.params.reportIds } }).then(r => {
     //   console.log(r);
     // });
     res.status(200).json({
       presc: pres,
-      reports: "not available"
+      reports: "not available",
     });
   });
 });

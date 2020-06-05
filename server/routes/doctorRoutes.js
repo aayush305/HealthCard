@@ -8,6 +8,7 @@ router.post("/doctorExtraDetail", (req, res) => {
   console.log("Inside doctorExtraDetail");
   doctor
     .create({
+      userId: req.body.userId,
       licence: req.body.licence,
       degree: req.body.degree,
       workPlace: req.body.work_place,

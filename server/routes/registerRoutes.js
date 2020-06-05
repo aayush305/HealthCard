@@ -5,6 +5,7 @@ const lab = require("../schemas/lab");
 const chemist = require("../schemas/chemist");
 const login = require("../schemas/login");
 const user = require("../schemas/user");
+const doctor = require("../schemas/doctor");
 
 router.post("/register", async (req, res) => {
   console.log("Inside post register app.js");
@@ -68,6 +69,26 @@ router.post("/registermedic", (req, res) => {
       console.log(data);
       res.status(200).json({
         success: true,
+      });
+    }
+  });
+});
+
+router.get("/commonUserData/:uId", (req, res) => {
+  user.findOne({ userId: req.params.uId }, function(err, data) {
+    if (!err) {
+      res.status(200).json({
+        userData: data,
+      });
+    }
+  });
+});
+
+router.get("/docData/:uId", (req, res) => {
+  doctor.findOne({ userId: req.params.uId }, function(err, data) {
+    if (!err) {
+      res.status(200).json({
+        docData: data,
       });
     }
   });

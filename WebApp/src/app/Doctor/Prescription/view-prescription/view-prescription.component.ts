@@ -1,123 +1,138 @@
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 
-import { UploadreportService } from './../../../Lab/uploadreport/uploadreport.service';
-import { ViewPrescriptionService } from './../view-prescription.service';
-import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { NgForm } from '@angular/forms';
+import { UploadreportService } from "./../../../Lab/uploadreport/uploadreport.service";
+import { ViewPrescriptionService } from "./../view-prescription.service";
+import { Component, OnInit } from "@angular/core";
+import { Subscription, BehaviorSubject } from "rxjs";
+import { NgForm } from "@angular/forms";
+import { RegisterService } from "src/app/register.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'app-view-prescription',
-  templateUrl: './view-prescription.component.html',
-  styleUrls: ['./view-prescription.component.css']
+  selector: "app-view-prescription",
+  templateUrl: "./view-prescription.component.html",
+  styleUrls: ["./view-prescription.component.css"],
 })
 export class ViewPrescriptionComponent implements OnInit {
+  public showDetails = false;
+  public pres = new BehaviorSubject<any>("");
+  public presList;
+  public prescData;
+  public reports;
+  public list = new BehaviorSubject<any>("");
+  public arr: Array<JSON>;
+  public obj: any;
+  public listofpre: Subscription;
+  public responsedData: any;
+  private userId;
+  public _preFlag = false;
   public images = [];
   public user;
-  public obj;
-  private alluser:Subscription;
+  private alluser: Subscription;
   private _flag = false;
-  public users:any;
-  dropdownList = [];
-  selectedItems = [];
-  dropdownSettings = {};
-  temp =[] 
-  selected:any;
-  keyword = 'name';
-  private __flag = false
-  private dataSubscription:Subscription
-  private btnClick = 0;
-  private responsedData: any;
-  private responsedData1: any
-  private columnDefs = [];
-  private rowData: any = [];
-  private keys = [];
-  private objectKeys = Object.keys;
-  private values: any = [];
-  private stringres: string;
-  constructor(private viewPrescriptionService: ViewPrescriptionService, private _uploadReportService: UploadreportService,
-    private router: Router) { }
-  private wholeSubscription:Subscription
+  public users: any;
+  temp = [];
+  public selected: any;
+  keyword = "name";
+  private dataSubscription: Subscription;
+  private responsedData1: any;
+  constructor(
+    private registerService: RegisterService,
+    private viewPrescriptionService: ViewPrescriptionService,
+    private _uploadReportService: UploadreportService,
+    private http: HttpClient,
+    private router: Router
+  ) {}
+  private wholeSubscription: Subscription;
   ngOnInit() {
-    this._uploadReportService.getuser();
-    this.alluser = this._uploadReportService.cast9Listener()
-    .subscribe(data => {
-      
-      this.obj = data
-      this.users = JSON.parse(this.obj)
-      var x=0
-      this.users.forEach(element => {
-        //this.temp.push(element.email)
-        this.temp.push({id:(x+1),name:element.userId + " | (" + element.firstname + " " + element.lastname + ")"})
-        console.log("proo"+element.email)
+    this.list.asObservable().subscribe((d) => (this.arr = d));
+    this.pres.asObservable().subscribe((d) => (this.presList = d));
 
+    this._uploadReportService.getuser();
+    this.alluser = this._uploadReportService
+      .cast9Listener()
+      .subscribe((data) => {
+        this.obj = data;
+        this.users = JSON.parse(this.obj);
+        var x = 0;
+        this.users.forEach((element) => {
+          //this.temp.push(element.email)
+          this.temp.push({
+            id: x + 1,
+            name:
+              element.userId +
+              " | (" +
+              element.firstname +
+              " " +
+              element.lastname +
+              ")",
+          });
+        });
+        //var u=this.users[0]
+        console.log(this.temp);
       });
-      //var u=this.users[0]
-      console.log(this.temp)
-    })
-    this.viewPrescriptionService.getDocsUsersPrescriptions(sessionStorage.getItem('uid'))
-    this.wholeSubscription = this.viewPrescriptionService.getWholeUserObject().subscribe((res:any)=>{
-      this.responsedData1 = res
-      this.keys = Object.keys(res[0]);
-      this.values = Object.values(res);
-      for (let i = 0; i < this.keys.length; i++) {
-        // console.log(this.keys[i])
-        this.columnDefs.push({ header: this.keys[i], field: this.keys[i] });
-      }
-      this.rowData.push(...res);
-      this.__flag = true
-      this._flag = true
-    })
-    // this.users = JSON.parse(this.obj)
+    this.viewPrescriptionService.getDocsUsersPrescriptions(
+      sessionStorage.getItem("uid")
+    );
+    this.wholeSubscription = this.viewPrescriptionService
+      .getWholeUserObject()
+      .subscribe((res: any) => {
+        this.responsedData1 = res;
+        this._flag = true;
+      });
   }
-  
+
   selectEvent(item) {
-    this.selected=item;
+    this.selected = item;
+    console.log("selected", this.selected);
+    this.showDetails = false;
+    this.submit();
     // do something with selected item
   }
- 
+
   onChangeSearch(val: string) {
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
   }
-  
-  onFocused(e){
+
+  onFocused(e) {
     console.log(e);
     // do something when input is focused
   }
 
-  onSubmit(form: NgForm) {
-    this._flag = true
-    this.btnClick +=1
-    if(this.btnClick > 1) {
-      this.rowData = []
-      this.columnDefs = []
-      this.dataSubscription.unsubscribe()
-    }
-    var x=this.selected.name;
-    var y=x.split(" ",1);
-    this.viewPrescriptionService.getPrescription(y)
-    this.dataSubscription = this.viewPrescriptionService.getUserSubject().subscribe((res:any) => {
-      this.responsedData = res
-      this.stringres = JSON.stringify(res)
-      this.keys = Object.keys(res[0]);
-      this.values = Object.values(res);
-      for (let i = 0; i < this.keys.length; i++) {
-        // console.log(this.keys[i])
-        this.columnDefs.push({ header: this.keys[i], field: this.keys[i] });
-      }
-      this.stringres = JSON.stringify(res.medicines)
-      console.log(this.stringres)
-      this.rowData.push(...res);
-      console.log(...this.rowData)
-    })
+  submit() {
+    console.log("<--->__" + JSON.stringify(this.arr));
 
-   
-    console.log(y[0]);
-  }
-  onClick(id: string) {
-    console.log('PRESID',id)
-    this.router.navigate(['/detailedPrescription'], {queryParams: {id: id}})
+    var x = this.selected.name;
+    var y = x.split(" ");
+    var pid = y[0];
+    console.log("pid--", pid);
+    this.http
+      .get(this.registerService.UserUrl + "/getDiagnosisList/" + pid)
+      .subscribe((res: any) => {
+        console.log("aaray", res);
+        this.list.next(res.dList);
+
+        console.log("arr ", this.arr);
+        if (this.arr.length > 0) this._preFlag = true;
+        else this._preFlag = false;
+      });
+
+    this._flag = true;
   }
 
+  getDetails(pId, reportIds) {
+    this.http
+      .get(
+        this.registerService.UserUrl + "/getDetails/" + pId + "/" + reportIds
+      )
+      .subscribe((res: any) => {
+        console.log("details", res);
+        this.pres.next(res.presc);
+        this.prescData = res.presc;
+        this.reports = res.reports;
+        this.showDetails = true;
+      });
+  }
+  onClick(id: string) {}
 }
