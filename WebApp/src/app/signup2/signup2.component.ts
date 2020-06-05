@@ -24,13 +24,14 @@ export class Signup2Component implements OnInit {
   public email: string;
   public selectedItems: any[];
   public dropdownList = [];
+  public selectedItemsDoc: any[];
+  public dropdownListDoc = [];
   public specialities: any[] = [
     {
       speciality: "",
     },
   ];
 
-  private sub1: Subscription;
   public dropdownSettings: IDropdownSettings;
 
   constructor(
@@ -51,6 +52,40 @@ export class Signup2Component implements OnInit {
       },
       { item_id: 4, item_text: "Urinalysis" },
       { item_id: 5, item_text: "INR (International Normalized Ratio)" },
+    ];
+    this.dropdownListDoc = [
+      { item_id: 1, item_text: "Allergists" },
+      { item_id: 2, item_text: "Anesthesiologists" },
+      { item_id: 3, item_text: "Cardiologists" },
+      { item_id: 4, item_text: "Colon and Rectal Surgeons" },
+      { item_id: 5, item_text: "Critical Care Medicine Specialists" },
+      { item_id: 6, item_text: "Dermatologists" },
+      { item_id: 7, item_text: "Endocrinologists" },
+      { item_id: 8, item_text: "Emergency Medicine Specialists" },
+      { item_id: 9, item_text: "Family Physicians" },
+      { item_id: 10, item_text: "Gastroenterologists" },
+      { item_id: 11, item_text: "Geriatric Medicine Specialists" },
+      { item_id: 12, item_text: "Hematologists" },
+      { item_id: 13, item_text: "Hospice and Palliative Medicine Specialists" },
+      { item_id: 14, item_text: "Infectious Disease Specialists" },
+      { item_id: 15, item_text: "Internists" },
+      { item_id: 16, item_text: "Nephrologists" },
+      { item_id: 17, item_text: "Neurologists" },
+      { item_id: 18, item_text: "Obstetricians and Gynecologists" },
+      { item_id: 19, item_text: "Oncologists         " },
+      { item_id: 20, item_text: "Ophthalmologists" },
+      { item_id: 21, item_text: "Osteopaths" },
+      { item_id: 22, item_text: "Otolaryngologists" },
+      { item_id: 23, item_text: "Pathologists" },
+      { item_id: 24, item_text: "Physiatrists" },
+      { item_id: 25, item_text: "Plastic Surgeons" },
+      { item_id: 26, item_text: "Podiatrists" },
+      { item_id: 27, item_text: "Psychiatrists" },
+      { item_id: 28, item_text: "Pulmonologists" },
+      { item_id: 29, item_text: "Radiologists" },
+      { item_id: 30, item_text: "Sports Medicine Specialists" },
+      { item_id: 31, item_text: "General Surgeons" },
+      { item_id: 32, item_text: "Urologists" },
     ];
     this.selectedItems = [{ item_id: 1, item_text: "Full Blood Examination" }];
     this.dropdownSettings = {
@@ -86,11 +121,11 @@ export class Signup2Component implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: true,
     };
-    this.userId = this.fname + "_" + this.lname;
-    this.labService.getSpecialityArray();
-    this.sub1 = this.labService.getSpecList().subscribe((list: []) => {
-      this.dropdownList = list;
-    });
+
+    // this.labService.getSpecialityArray();
+    // this.sub1 = this.labService.getSpecList().subscribe((list: []) => {
+    //   this.dropdownListDoc = list;
+    // });
 
     // this.dropdownList = this.register.getSpecialityArray();
     // Uncomment after ready getId ready in register.service.ts
@@ -146,7 +181,7 @@ export class Signup2Component implements OnInit {
 
   registerDoc(form) {
     this.specialities.forEach((spec) => {
-      this.selectedItems.push(spec.speciality);
+      this.selectedItemsDoc.push(spec.speciality);
     });
 
     if (
@@ -155,8 +190,7 @@ export class Signup2Component implements OnInit {
       form.work_name.value &&
       form.work_contact.value &&
       form.work_address.value &&
-      this.selectedItems &&
-      this.specialities
+      (this.selectedItemsDoc || this.specialities)
     ) {
       this.register.registeDoc(
         this.fname,
@@ -170,8 +204,7 @@ export class Signup2Component implements OnInit {
         this.user,
         form.licence.value,
         form.degree.value,
-        this.selectedItems,
-        this.specialities,
+        this.selectedItemsDoc,
         form.work_name.value,
         form.work_contact.value,
         form.work_address.value

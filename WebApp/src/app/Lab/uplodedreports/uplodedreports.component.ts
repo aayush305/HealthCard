@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from "rxjs";
-import { LabHomeService } from "./lab-home.service";
+import { LabHomeService } from "./../lab-home/lab-home.service";
 import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: "app-lab-home",
-  templateUrl: "./lab-home.component.html",
-  styleUrls: ["./lab-home.component.css"]
+  selector: 'app-uplodedreports',
+  templateUrl: './uplodedreports.component.html',
+  styleUrls: ['./uplodedreports.component.css']
 })
-export class LabHomeComponent implements OnInit {
-
+export class UplodedreportsComponent implements OnInit {
   private diagSubscription: Subscription;
   private responsedData: any = [];
   private keys: any = [];
@@ -28,11 +27,11 @@ export class LabHomeComponent implements OnInit {
   constructor(private LabHomeService: LabHomeService,private http:HttpClient,private Toastr: ToastrService,) {}
 
   ngOnInit() {
-    this.LabHomeService.getLabDiagnoses();
-    this.diagSubscription = this.LabHomeService.getDiagSubject().subscribe(
+    this.LabHomeService.getLabuploaded();
+    this.diagSubscription = this.LabHomeService.getuploadedSubject().subscribe(
       (res: any) => {
         if(res == null || res[0] === undefined){
-          this.Toastr.warning("No pending reports available");
+          this.Toastr.warning("No Uploaded reports available");
         }
         else
         {
@@ -53,30 +52,8 @@ export class LabHomeComponent implements OnInit {
         //console.log(...this.rowData)
       }
       }
+   
     );
-  }
-
-  onFileSelected(event){
-    if (event.target.files.length > 0) {
-      this.multipleImages = event.target.files;
-    }
-  }
-
-  onClick(id: string) {
-  }
-
-  upload(userId: string,daignoses_id: string){
-    //console.log("UID", id)
-    const formData = new FormData();
-    for(let img of this.multipleImages){
-      formData.append('files', img);
-    }
-
-    this.http.post<any>('http://localhost:8000/api/lab/upload/'+userId + "/"+sessionStorage.getItem('uid') + "/" + daignoses_id, formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
-    );
-    this.Toastr.success("Report uploaded successfully");
   }
 
 }

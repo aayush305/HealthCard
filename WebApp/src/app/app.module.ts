@@ -27,7 +27,7 @@ import { DiagnoseComponent } from "./Doctor/diagnose/diagnose.component";
 import { HomeComponent } from "./home/home.component";
 import { LabHomeComponent } from "./Lab/lab-home/lab-home.component";
 import { TableModule } from "primeng/table";
-import { DetailedPrescriptionComponent } from "./Doctor/Prescription/detailed-prescription/detailed-prescription.component";
+import { UplodedreportsComponent } from './Lab/uplodedreports/uplodedreports.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import { DetailedPrescriptionComponent } from "./Doctor/Prescription/detailed-pr
     DiagnoseComponent,
     HomeComponent,
     LabHomeComponent,
-    DetailedPrescriptionComponent,
+    UplodedreportsComponent,
   ],
   imports: [
     BrowserModule,

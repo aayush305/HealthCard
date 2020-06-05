@@ -6,7 +6,7 @@ import { ToastrService } from "ngx-toastr";
 import * as CryptoJs from "crypto-js";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class RegisterService {
   public UserUrl = "http://localhost:8000/api/user";
@@ -94,7 +94,7 @@ export class RegisterService {
             blood,
             email,
             user,
-            userId
+            userId,
           })
           .subscribe((response: any) => {
             if (user == "lab") {
@@ -114,7 +114,7 @@ export class RegisterService {
                   labname,
                   DOE,
                   lab_address,
-                  selectedItems
+                  selectedItems,
                 })
                 .subscribe((response: any) => {
                   if (response.success) {
@@ -200,7 +200,7 @@ export class RegisterService {
             blood,
             email,
             user,
-            userId
+            userId,
           })
           .subscribe((response: any) => {
             this.http
@@ -218,7 +218,7 @@ export class RegisterService {
                 licence,
                 shopname,
                 DOE,
-                shop_address
+                shop_address,
               })
               .subscribe((response: any) => {
                 if (response.success) {
@@ -245,7 +245,6 @@ export class RegisterService {
     licence,
     degree,
     specialities,
-    newSpecialities,
     work_place,
     work_place_con,
     work_place_add
@@ -276,7 +275,7 @@ export class RegisterService {
             blood,
             email,
             user,
-            userId
+            userId,
           })
           .subscribe((response: any) => {
             if (response.success) {
@@ -288,7 +287,7 @@ export class RegisterService {
                   specialities,
                   work_place,
                   work_place_con,
-                  work_place_add
+                  work_place_add,
                 })
                 .subscribe((res: any) => {
                   if (res.success) {
@@ -328,7 +327,7 @@ export class RegisterService {
       blood,
       email,
       user,
-      userId
+      userId,
     });
   }
 
@@ -358,7 +357,7 @@ export class RegisterService {
           else if (response.userType.toLowerCase() == "doctor")
             this.router.navigate(["/Diagnose"]);
           else if (response.userType.toLowerCase() == "lab")
-            this.router.navigate(["/labhome"]);
+            this.router.navigate(["/lab/labhome"]);
           else if (response.userType.toLowerCase() == "medical")
             this.router.navigate(["/Patient/Home"]);
         } else {

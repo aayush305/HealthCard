@@ -10,7 +10,11 @@ var diagnose = new mongoose.Schema({
   reportdNeeded: [],
   prescriptionId: String,
   reportIds: [],
-  treatementDesc: String
+  treatementDesc: String,
+  isreportuploaded: {
+    type: Number,
+    default: 0,
+  },
 });
 var dignoseModel = mongoose.model("diagnose", diagnose);
 
