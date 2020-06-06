@@ -26,6 +26,7 @@ export class Signup2Component implements OnInit {
   public dropdownList = [];
   public selectedItemsDoc: any[];
   public dropdownListDoc = [];
+  public finSpecialities: Array<string> = [];
   public specialities: any[] = [
     {
       speciality: "",
@@ -180,8 +181,13 @@ export class Signup2Component implements OnInit {
   }
 
   registerDoc(form) {
+    this.selectedItemsDoc.forEach((spec) => {
+      this.finSpecialities.push(spec.item_text);
+    });
     this.specialities.forEach((spec) => {
-      this.selectedItemsDoc.push(spec.speciality);
+      if (spec.speciality.trim() != "") {
+        this.finSpecialities.push(spec.speciality);
+      }
     });
 
     if (
@@ -204,7 +210,7 @@ export class Signup2Component implements OnInit {
         this.user,
         form.licence.value,
         form.degree.value,
-        this.selectedItemsDoc,
+        this.finSpecialities,
         form.work_name.value,
         form.work_contact.value,
         form.work_address.value
