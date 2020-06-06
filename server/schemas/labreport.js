@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 var labreport = new mongoose.Schema({
   labid:String,
-  userid: String,
   report: String,
-  
+  daignose_id: String
 });
 var labreport = mongoose.model("labreport", labreport);
 

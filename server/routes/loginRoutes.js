@@ -29,7 +29,7 @@ router.post("/login", (req, res) => {
             d.dob = dateFormater.asString("dd/MM/yyyy", d.dob);
             console.log("json:", d);
             console.log("uisady:", u.toObject());
-
+            
             res.status(200).json({
               success: true,
               userType: r.module,

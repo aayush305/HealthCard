@@ -1,39 +1,141 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const diagnose = require("../schemas/diagnose");
+const mkdirp = require("mkdirp");
+const fs = require("fs");
 const labreport = require("../schemas/labreport");
-
 const storage = multer.diskStorage({
   destination: (req, file, callBack) => {
+    const dir = "/home/mj/hackathon_new/Hackathon/server/lol";
+
     callBack(null, "upload");
   },
   filename: (req, file, callBack) => {
     callBack(null, `health_${file.originalname}`);
-  }
+  },
 });
 
 const upload = multer({ storage: storage });
-
-router.post("/upload/:userid", upload.array("files"), (req, res) => {
-  const files = req.files;
-  files.forEach(x => {
-    console.log(x.filename);
-    console.log("uSERID", req.params.userid);
-    labreport
-      .create({
-        labid: "Not done yet",
-        userid: req.params.userid,
-        report: x.filename
-      })
-      .then(data => {});
-  });
-  //console.log(file.filename)
-  if (!files) {
-    console.log("error");
-  } else {
-    console.log("Doneeee");
+router.post(
+  "/upload/:labID/:daignoses_id",
+  upload.array("files"),
+  (req, res, next) => {
+    console.log("upload::", req.files);
+    console.log("user idddddd",req.params.userID);
+    console.log("diagnose idddddd",req.params.daignoses_id);
+    const files = req.files;
+    
+    files.forEach((x) => {
+      console.log("In file");
+      labreport
+        .create({
+          labid: req.params.labID,
+          report: x.filename,
+          daignose_id: req.params.daignoses_id,
+        })
+        .then((data) => {
+          var a= data._id;
+          var arro=[] ;
+          diagnose.find({_id: req.params.daignoses_id},"reportIds" ,function (err, data) {
+           
+            if(data.reportIds != null){
+              arro = data.reportIds;
+            }
+            arro.push(a);
+            console.log("arro",arro);
+            diagnose.update(
+              { _id: req.params.daignoses_id },
+              { $set: { reportIds: arro } },
+              function(err, res) {}
+            );
+          })
+        });
+    });
+    diagnose.update(
+      { _id: req.params.daignoses_id },
+      { $set: { isreportuploaded: 1 } },
+      function(err, res) {}
+    );
+    if (!files) {
+      const error = new Error("No File");
+      error.httpStatusCode = 400;
+      return next(error);
+    }
+    res.send({ sttus: "ok" });
   }
-  res.send(files);
+);
+
+router.get("/uploadedreport", (req, res) => {
+  var aa = [];
+  diagnose.find(
+    { reportdNeeded: { $ne: null }, isreportuploaded: 1 },
+    {
+      symptoms: 1,
+      reportdNeeded: 1,
+      _id: 1,
+      docName: 1,
+      prescriptionId: 1,
+      treatmentDesc: 1,
+      userName: 1,
+    },
+    (err, docs) => {
+      if (err) {
+        res.status(200).json({
+          ok: false,
+        });
+        console.log("ERR", err);
+      }
+      if (docs) {
+        res.status(200).json({
+          ok: true,
+          docs: docs,
+        });
+        console.log("DOCS", docs);
+      }
+    }
+  );
+});
+router.get("/getDiagnoses", (req, res) => {
+  var aa = [];
+  /*labreport.find({},{_id:0,daignose_id:1},
+    (err,data)=>{
+      console.log("data",data);
+      aa.push(JSON.stringify(data[0]));
+    });
+
+  console.log("aa",aa);*/
+  diagnose.find(
+    { reportdNeeded: { $ne: null }, isreportuploaded: 0 },
+    {
+      symptoms: 1,
+      reportdNeeded: 1,
+      _id: 1,
+      docName: 1,
+      prescriptionId: 1,
+      treatmentDesc: 1,
+      userName: 1,
+    },
+    (err, docs) => {
+      if (err) {
+        res.status(200).json({
+          ok: false,
+        });
+        console.log("ERR", err);
+      }
+      if (docs) {
+        res.status(200).json({
+          ok: true,
+          docs: docs,
+        });
+        console.log("DOCS", docs);
+      }
+    }
+  );
+});
+
+router.post("/helloworld", (req, res) => {
+  console.log("Hello World");
 });
 
 module.exports = router;

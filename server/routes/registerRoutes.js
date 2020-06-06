@@ -5,6 +5,7 @@ const lab = require("../schemas/lab");
 const chemist = require("../schemas/chemist");
 const login = require("../schemas/login");
 const user = require("../schemas/user");
+const doctor = require("../schemas/doctor");
 
 router.post("/register", async (req, res) => {
   console.log("Inside post register app.js");
@@ -14,12 +15,12 @@ router.post("/register", async (req, res) => {
     console.log("inside lab");
     var selecteditems = req.body.selectedItems;
 
-    selecteditems.forEach(x => {
+    selecteditems.forEach((x) => {
       //console.log(x.item_text)
       //insert lab tests
       new labtest({
         userId: req.body.userid,
-        test: x.item_text
+        test: x.item_text,
       }).save(function(err, data) {
         if (err) {
           console.log(err);
@@ -31,18 +32,17 @@ router.post("/register", async (req, res) => {
       licence: req.body.licence,
       labname: req.body.labname,
       DOE: req.body.DOE,
-      address: req.body.lab_address
+      address: req.body.lab_address,
     }).save(function(err, data) {
       if (err) {
         console.log("oh no");
         res.status(500).json({
-          isSucceed: false
+          isSucceed: false,
         });
       } else {
         console.log(data);
-        console.log("love you baby");
         res.status(200).json({
-          success: true
+          success: true,
         });
       }
     });
@@ -58,18 +58,47 @@ router.post("/registermedic", (req, res) => {
     licence: req.body.licence,
     shopname: req.body.labname,
     DOE: req.body.DOE,
-    address: req.body.shop_address
+    address: req.body.shop_address,
   }).save(function(err, data) {
     if (err) {
       console.log("oh no");
       res.status(500).json({
-        isSucceed: false
+        isSucceed: false,
       });
     } else {
       console.log(data);
-      console.log("love you baby");
       res.status(200).json({
-        success: true
+        success: true,
+      });
+    }
+  });
+});
+
+router.get("/commonUserData/:uId", (req, res) => {
+  user.findOne({ userId: req.params.uId }, function(err, data) {
+    if (!err) {
+      res.status(200).json({
+        userData: data,
+      });
+    }
+  });
+});
+
+router.get("/docData/:uId", (req, res) => {
+  doctor.findOne({ userId: req.params.uId }, function(err, data) {
+    if (!err) {
+      res.status(200).json({
+        docData: data,
+      });
+    }
+  });
+});
+
+router.get("/labdata/:uId", (req, res) => {
+  lab.findOne({ userId: req.params.uId }, function(err, data) {
+    if (!err) {
+      res.status(200).json({
+        labdata: data,
       });
     }
   });
@@ -85,9 +114,9 @@ router.post("/registeruser", async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       module: req.body.user,
-      userId: req.body.userId
+      userId: req.body.userId,
     })
-    .then(r => {
+    .then((r) => {
       console.log("r:", r);
       user
         .create({
@@ -99,19 +128,19 @@ router.post("/registeruser", async (req, res) => {
           dob: req.body.dob,
           blood: req.body.blood,
           email: req.body.email,
-          userType: req.body.userType
+          userType: req.body.userType,
         })
-        .then(u => {
+        .then((u) => {
           res.status(200).json({
             success: true,
-            user: u
+            user: u,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("user error", err);
         });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("login err:", err);
     });
   // });
