@@ -1,42 +1,51 @@
-#project is buid=ld on MEAN STACK
+# HealthCard
 
-# Healthcard
-#To install node.js
+HealthCard is your comprehensive solution for health management, built on the powerful MEAN Stack. Centralize health records, prescriptions, and diagnoses to transform the way healthcare data is accessed and managed.
 
+## Features
 
-A nice project with a nice description
+- **Centralized Platform**: Consolidate all healthcare-related data—prescriptions, reports, or diagnoses—in one accessible location.
+- **User-Centric Design**: Crafted for a seamless experience catering to doctors, patients, and labs.
+- **Security First**: Prioritizing top-tier security measures to ensure your health data remains confidential and protected.
 
----
-## Requirements
+## Table of Contents
 
-For development, you will only need Node.js and a node global package, Yarn, installed in your environement.
+- [Setup](#setup)
+- [Functionalities](#functionalities)
 
-### Node
-- #### Node installation on Windows
+## Setup
 
-  Just go on [official Node.js website](https://nodejs.org/) and download the installer.
-Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
+### Prerequisites
 
-- #### Node installation on Ubuntu
+- **Node.js**: Ensure Node.js is installed. If not, download from the [official Node.js website](https://nodejs.org/).
+- **Yarn (or npm)**: We utilize Yarn for package management, but npm is also compatible.
+- **Git**: Ensure `git` is available in your PATH. If not, download from [here](https://git-scm.com/).
 
-  You can install nodejs and npm easily with apt install, just run the following commands.
+### Installation Steps
 
-      $ sudo apt install nodejs
-      $ sudo apt install npm
+1. **Clone the Repository**:
+   ```bash
+   git clone [current-repo-link]
+   ```
+   
+2. **Install Dependencies**:
+   Navigate to the WebApp folder:
+   ```bash
+   cd WebApp
+   npm install
+   ```
+   Install server dependencies by navigating to the server folder:
+   ```bash
+   cd server
+   npm install
+   ```
 
-- #### Other Operating Systems
-  You can find more information about the installation on the [official Node.js website](https://nodejs.org/) and the [official NPM website](https://npmjs.org/).
+3. **Run the Application:**
+   Execute `npm start` in both the WebApp and server directories.
 
-If the installation was successful, you should be able to run the following command.
-
-    $ node --version
-    v8.11.3
-
-    $ npm --version
-    6.1.0
-
-If you need to update `npm`, you can make it using `npm`! Cool right? After running the following command, just open again the command line and be happy.
-
-    $ npm install npm -g
-    
- Project is based on problem defination provided for SSIP Gujarat Hackthon 2020
+## Functionalities
+   - **Prescription Central**: Seamlessly add, view, and manage prescriptions, ensuring you never lose track.
+   - **Diagnosis Dashboard**: A dedicated space to record, retrieve, and manage diagnosis details.
+   - **Report Hub**: A streamlined process to upload and access medical reports, making it easier for both patients and healthcare professionals.
+   - **User Management**: Comprehensive profile management for all user types, be it doctors, patients, or labs.
+   - **Secure Gateways**: Robust authentication mechanisms for secure login and signup processes.
